@@ -429,11 +429,113 @@
   <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="numericUpDown22.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown22.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown22.Name" xml:space="preserve">
+    <value>numericUpDown22</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown22.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown22.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown21.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown21.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown21.Name" xml:space="preserve">
+    <value>numericUpDown21</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown21.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown21.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown5.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -448,7 +550,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;numericUpDown5.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -475,7 +577,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox11.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -496,7 +598,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;comboBox11.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown4.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -517,7 +619,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;numericUpDown4.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown3.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -538,7 +640,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;numericUpDown3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox10.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -559,7 +661,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;comboBox10.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox8.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -667,7 +769,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -676,7 +778,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -696,11 +798,113 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="numericUpDown23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown23.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown23.Name" xml:space="preserve">
+    <value>numericUpDown23</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown23.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown23.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown24.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown24.Name" xml:space="preserve">
+    <value>numericUpDown24</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown24.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown24.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown24.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label12.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown6.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -715,7 +919,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;numericUpDown6.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -745,7 +949,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox12.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -766,7 +970,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;comboBox12.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown7.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -787,7 +991,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;numericUpDown7.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown8.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -808,7 +1012,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;numericUpDown8.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox13.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -829,7 +1033,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;comboBox13.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox14.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -937,7 +1141,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -946,7 +1150,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -966,11 +1170,113 @@
   <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="numericUpDown25.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown25.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown25.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown25.Name" xml:space="preserve">
+    <value>numericUpDown25</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown25.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown25.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown25.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown26.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown26.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown26.Name" xml:space="preserve">
+    <value>numericUpDown26</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown26.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown26.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
+  </data>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown9.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -985,7 +1291,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;numericUpDown9.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1015,7 +1321,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox18.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -1036,7 +1342,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;comboBox18.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown10.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -1057,7 +1363,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;numericUpDown10.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown11.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -1078,7 +1384,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;numericUpDown11.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox19.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -1099,7 +1405,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;comboBox19.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox20.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -1207,7 +1513,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage7.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1216,7 +1522,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1236,11 +1542,113 @@
   <data name="&gt;&gt;tabPage7.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="numericUpDown27.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown27.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown27.Name" xml:space="preserve">
+    <value>numericUpDown27</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown27.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown27.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown27.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown28.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown28.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown28.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown28.Name" xml:space="preserve">
+    <value>numericUpDown28</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown28.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown28.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown28.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label15.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label15.Name" xml:space="preserve">
+    <value>label15</value>
+  </data>
+  <data name="&gt;&gt;label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label16.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown12.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1255,7 +1663,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;numericUpDown12.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1285,7 +1693,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox24.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -1306,7 +1714,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;comboBox24.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown13.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -1327,7 +1735,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;numericUpDown13.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown14.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -1348,7 +1756,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;numericUpDown14.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox25.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -1369,7 +1777,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;comboBox25.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox26.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -1477,7 +1885,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage8.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1486,7 +1894,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage8.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1506,11 +1914,113 @@
   <data name="&gt;&gt;tabPage8.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="numericUpDown29.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown29.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown29.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown29.Name" xml:space="preserve">
+    <value>numericUpDown29</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown29.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown29.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown29.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown30.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown30.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown30.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown30.Name" xml:space="preserve">
+    <value>numericUpDown30</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown30.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown30.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown30.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label17.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label17.Name" xml:space="preserve">
+    <value>label17</value>
+  </data>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label18.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="label18.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label18.Name" xml:space="preserve">
+    <value>label18</value>
+  </data>
+  <data name="&gt;&gt;label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label18.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown15.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1525,7 +2035,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;numericUpDown15.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1555,7 +2065,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox30.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -1576,7 +2086,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;comboBox30.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown16.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -1597,7 +2107,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;numericUpDown16.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown17.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -1618,7 +2128,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;numericUpDown17.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox31.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -1639,7 +2149,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;comboBox31.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox32.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -1747,7 +2257,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage9.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1756,7 +2266,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1776,11 +2286,113 @@
   <data name="&gt;&gt;tabPage9.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="numericUpDown31.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 122</value>
+  </data>
+  <data name="numericUpDown31.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown31.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown31.Name" xml:space="preserve">
+    <value>numericUpDown31</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown31.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown31.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown31.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numericUpDown32.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 96</value>
+  </data>
+  <data name="numericUpDown32.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="numericUpDown32.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown32.Name" xml:space="preserve">
+    <value>numericUpDown32</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown32.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown32.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;numericUpDown32.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label19.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label19.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>Ball Capsule</value>
+  </data>
+  <data name="&gt;&gt;label19.Name" xml:space="preserve">
+    <value>label19</value>
+  </data>
+  <data name="&gt;&gt;label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label19.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 98</value>
+  </data>
+  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label20.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="label20.Text" xml:space="preserve">
+    <value>Ability (HGSS)</value>
+  </data>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
+  </data>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="numericUpDown18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 70</value>
+    <value>142, 70</value>
   </data>
   <data name="numericUpDown18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="numericUpDown18.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1795,7 +2407,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;numericUpDown18.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1825,7 +2437,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="comboBox36.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 43</value>
@@ -1846,7 +2458,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;comboBox36.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numericUpDown19.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 44</value>
@@ -1867,7 +2479,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;numericUpDown19.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="numericUpDown20.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 17</value>
@@ -1888,7 +2500,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;numericUpDown20.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="comboBox37.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 16</value>
@@ -1909,7 +2521,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;comboBox37.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="comboBox38.Location" type="System.Drawing.Point, System.Drawing">
     <value>115, 46</value>
@@ -2017,7 +2629,7 @@
     <value>tabPage10</value>
   </data>
   <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="tabPage10.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -2026,7 +2638,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>417, 102</value>
+    <value>417, 146</value>
   </data>
   <data name="tabPage10.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2050,7 +2662,7 @@
     <value>13, 181</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>425, 128</value>
+    <value>425, 172</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2139,8 +2751,11 @@
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 315</value>
+    <value>323, 370</value>
   </data>
   <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 23</value>
@@ -2194,7 +2809,10 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>450, 347</value>
+    <value>450, 405</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

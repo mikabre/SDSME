@@ -666,7 +666,7 @@ namespace WindowsFormsApplication1
             {
                 BinaryReader readTrainer = new BinaryReader(File.OpenRead(trdataPath + "\\" + i.ToString("D4")));
                 readTrainer.BaseStream.Position = 0x1;
-                comboBox1.Items.Add(i + ": " + currentClass[readTrainer.ReadByte()] + " " + names[i]);
+                comboBox1.Items.Add(names[i] + " - " + i); //makes trainers searchable by name
                 readTrainer.Close();
             }
             comboBox1.SelectedIndex = 0;
@@ -714,33 +714,37 @@ namespace WindowsFormsApplication1
             }
             readTrainer.Close();
 
-            if (numericUpDown1.Value != 0)
+            if (numericUpDown1.Value != 0) //If number of Pokemon > 0, read first Pokemon
             {
                 BinaryReader readPokemon = new BinaryReader(File.OpenRead(trpokePath + "\\" + comboBox1.SelectedIndex.ToString("D4")));
-                numericUpDown5.Value = readPokemon.ReadUInt16();
-                numericUpDown3.Value = readPokemon.ReadUInt16();
+                numericUpDown5.Value = readPokemon.ReadByte(); //IVs
+                numericUpDown21.Value = readPokemon.ReadByte(); //Ability (HGSS only)
+                numericUpDown3.Value = readPokemon.ReadUInt16(); //Level
                 int pokemon1 = readPokemon.ReadUInt16();
                 numericUpDown4.Value = pokemon1 / 1024;
-                comboBox10.SelectedIndex = pokemon1 - ((int)numericUpDown4.Value * 1024);
+                comboBox10.SelectedIndex = pokemon1 - ((int)numericUpDown4.Value * 1024); //sets form(e)
                 if (checkBoxItems.Checked == true)
                 {
                     comboBox11.SelectedIndex = readPokemon.ReadUInt16();
                 }
                 if (checkBoxAttacks.Checked == true)
                 {
-                    comboBox6.SelectedIndex = readPokemon.ReadUInt16();
-                    comboBox7.SelectedIndex = readPokemon.ReadUInt16();
-                    comboBox9.SelectedIndex = readPokemon.ReadUInt16();
-                    comboBox8.SelectedIndex = readPokemon.ReadUInt16();
+                    comboBox6.SelectedIndex = readPokemon.ReadUInt16(); //attack 1
+                    comboBox7.SelectedIndex = readPokemon.ReadUInt16(); //attack 2
+                    comboBox9.SelectedIndex = readPokemon.ReadUInt16(); //attack 3
+                    comboBox8.SelectedIndex = readPokemon.ReadUInt16(); //attack 4
                 }
+                numericUpDown22.Value = readPokemon.ReadByte(); //Ball Capsule
+
                 if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                 {
-                    readPokemon.BaseStream.Position += 0x2;
+                    readPokemon.BaseStream.Position += 0x1; //might need to change back to 0x2
                 }
-                if (numericUpDown1.Value > 1)
+                if (numericUpDown1.Value > 1) //If number of Pokemon > 1, read second Pokemon
                 {
-                    numericUpDown6.Value = readPokemon.ReadUInt16();
-                    numericUpDown8.Value = readPokemon.ReadUInt16();
+                    numericUpDown6.Value = readPokemon.ReadByte(); //IVs
+                    numericUpDown24.Value = readPokemon.ReadByte(); //Ability
+                    numericUpDown8.Value = readPokemon.ReadUInt16(); //Level
                     pokemon1 = readPokemon.ReadUInt16();
                     numericUpDown7.Value = pokemon1 / 1024;
                     comboBox13.SelectedIndex = pokemon1 - ((int)numericUpDown7.Value * 1024);
@@ -755,14 +759,17 @@ namespace WindowsFormsApplication1
                         comboBox15.SelectedIndex = readPokemon.ReadUInt16();
                         comboBox14.SelectedIndex = readPokemon.ReadUInt16();
                     }
+                    numericUpDown23.Value = readPokemon.ReadByte(); //Ball Capsule
+
                     if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                     {
-                        readPokemon.BaseStream.Position += 0x2;
+                        readPokemon.BaseStream.Position += 0x1;
                     }
-                    if (numericUpDown1.Value > 2)
+                    if (numericUpDown1.Value > 2) //If number of Pokemon > 2, read third Pokemon
                     {
-                        numericUpDown9.Value = readPokemon.ReadUInt16();
-                        numericUpDown11.Value = readPokemon.ReadUInt16();
+                        numericUpDown9.Value = readPokemon.ReadByte(); //IVs
+                        numericUpDown26.Value = readPokemon.ReadByte(); //Ability
+                        numericUpDown11.Value = readPokemon.ReadUInt16(); //Level
                         pokemon1 = readPokemon.ReadUInt16();
                         numericUpDown10.Value = pokemon1 / 1024;
                         comboBox19.SelectedIndex = pokemon1 - ((int)numericUpDown10.Value * 1024);
@@ -777,14 +784,17 @@ namespace WindowsFormsApplication1
                             comboBox21.SelectedIndex = readPokemon.ReadUInt16();
                             comboBox20.SelectedIndex = readPokemon.ReadUInt16();
                         }
+                        numericUpDown25.Value = readPokemon.ReadByte(); //Ball Capsule
+
                         if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                         {
-                            readPokemon.BaseStream.Position += 0x2;
+                            readPokemon.BaseStream.Position += 0x1;
                         }
-                        if (numericUpDown1.Value > 3)
+                        if (numericUpDown1.Value > 3) //If number of Pokemon > 3, read fourth Pokemon
                         {
-                            numericUpDown12.Value = readPokemon.ReadUInt16();
-                            numericUpDown14.Value = readPokemon.ReadUInt16();
+                            numericUpDown12.Value = readPokemon.ReadByte(); //IVs
+                            numericUpDown28.Value = readPokemon.ReadByte(); //Ability
+                            numericUpDown14.Value = readPokemon.ReadUInt16(); //Level
                             pokemon1 = readPokemon.ReadUInt16();
                             numericUpDown13.Value = pokemon1 / 1024;
                             comboBox25.SelectedIndex = pokemon1 - ((int)numericUpDown13.Value * 1024);
@@ -799,14 +809,17 @@ namespace WindowsFormsApplication1
                                 comboBox27.SelectedIndex = readPokemon.ReadUInt16();
                                 comboBox26.SelectedIndex = readPokemon.ReadUInt16();
                             }
+                            numericUpDown27.Value = readPokemon.ReadByte(); //Ball Capsule
+
                             if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                             {
-                                readPokemon.BaseStream.Position += 0x2;
+                                readPokemon.BaseStream.Position += 0x1;
                             }
-                            if (numericUpDown1.Value > 4)
+                            if (numericUpDown1.Value > 4) //If number of Pokemon > 4, read fifth Pokemon
                             {
-                                numericUpDown15.Value = readPokemon.ReadUInt16();
-                                numericUpDown17.Value = readPokemon.ReadUInt16();
+                                numericUpDown15.Value = readPokemon.ReadByte(); //IVs
+                                numericUpDown30.Value = readPokemon.ReadByte(); //Ability
+                                numericUpDown17.Value = readPokemon.ReadUInt16(); //Level
                                 pokemon1 = readPokemon.ReadUInt16();
                                 numericUpDown16.Value = pokemon1 / 1024;
                                 comboBox31.SelectedIndex = pokemon1 - ((int)numericUpDown16.Value * 1024);
@@ -821,14 +834,16 @@ namespace WindowsFormsApplication1
                                     comboBox33.SelectedIndex = readPokemon.ReadUInt16();
                                     comboBox32.SelectedIndex = readPokemon.ReadUInt16();
                                 }
+                                numericUpDown29.Value = readPokemon.ReadByte(); //Ball Capsule
                                 if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                                 {
-                                    readPokemon.BaseStream.Position += 0x2;
+                                    readPokemon.BaseStream.Position += 0x1;
                                 }
-                                if (numericUpDown1.Value > 5)
+                                if (numericUpDown1.Value > 5) //If number of Pokemon > 5, read sixth Pokemon
                                 {
-                                    numericUpDown18.Value = readPokemon.ReadUInt16();
-                                    numericUpDown20.Value = readPokemon.ReadUInt16();
+                                    numericUpDown18.Value = readPokemon.ReadByte(); //IVs
+                                    numericUpDown32.Value = readPokemon.ReadByte(); //Ability
+                                    numericUpDown20.Value = readPokemon.ReadUInt16(); //Level
                                     pokemon1 = readPokemon.ReadUInt16();
                                     numericUpDown19.Value = pokemon1 / 1024;
                                     comboBox37.SelectedIndex = pokemon1 - ((int)numericUpDown19.Value * 1024);
@@ -843,6 +858,7 @@ namespace WindowsFormsApplication1
                                         comboBox39.SelectedIndex = readPokemon.ReadUInt16();
                                         comboBox38.SelectedIndex = readPokemon.ReadUInt16();
                                     }
+                                    numericUpDown31.Value = readPokemon.ReadByte(); //Ball Capsule
                                 }
                             }
                         }
@@ -1024,7 +1040,8 @@ namespace WindowsFormsApplication1
                 writeNew.Write((byte)0x0);
             }
             writeNew.Close();
-            comboBox1.Items.Add(newTrainerID + ": " + currentTrainerClass[0] + " ???");
+            //comboBox1.Items.Add(newTrainerID + ": " + currentTrainerClass[0] + " ???");
+            comboBox1.Items.Add("??? - " + newTrainerID);
             names.Add("???");
             saveText();
             comboBox1.SelectedIndex = newTrainerID;
@@ -1056,11 +1073,13 @@ namespace WindowsFormsApplication1
             writeTrainer.Close();
 
             File.Create(trpokePath + "\\" + comboBox1.SelectedIndex.ToString("D4")).Close();
+            // Write Pokemon
             if (numericUpDown1.Value != 0)
             {
                 BinaryWriter writePokemon = new BinaryWriter(File.OpenWrite(trpokePath + "\\" + comboBox1.SelectedIndex.ToString("D4")));
-                writePokemon.Write((UInt16)numericUpDown5.Value);
-                writePokemon.Write((UInt16)numericUpDown3.Value);
+                writePokemon.Write((Byte)numericUpDown5.Value); // IVs
+                writePokemon.Write((Byte)numericUpDown21.Value); // Ability (HGSS only)
+                writePokemon.Write((UInt16)numericUpDown3.Value); // Level
                 writePokemon.Write((UInt16)(comboBox10.SelectedIndex + (numericUpDown4.Value * 1024)));
                 if (checkBoxItems.Checked == true)
                 {
@@ -1073,14 +1092,17 @@ namespace WindowsFormsApplication1
                     writePokemon.Write((UInt16)comboBox9.SelectedIndex);
                     writePokemon.Write((UInt16)comboBox8.SelectedIndex);
                 }
+                writePokemon.Write((Byte)numericUpDown22.Value); // Ball Capsule
+
                 if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                 {
-                    writePokemon.Write((UInt16)0x0);
+                    writePokemon.Write((Byte)0x0);
                 }
-                if (numericUpDown1.Value > 1)
+                if (numericUpDown1.Value > 1) //If number of Pokemon > 1, write second Pokemon
                 {
-                    writePokemon.Write((UInt16)numericUpDown6.Value);
-                    writePokemon.Write((UInt16)numericUpDown8.Value);
+                    writePokemon.Write((Byte)numericUpDown6.Value); //IVs
+                    writePokemon.Write((Byte)numericUpDown24.Value); // Ability
+                    writePokemon.Write((UInt16)numericUpDown8.Value); // Level
                     writePokemon.Write((UInt16)(comboBox13.SelectedIndex + (numericUpDown7.Value * 1024)));
                     if (checkBoxItems.Checked == true)
                     {
@@ -1093,14 +1115,17 @@ namespace WindowsFormsApplication1
                         writePokemon.Write((UInt16)comboBox15.SelectedIndex);
                         writePokemon.Write((UInt16)comboBox14.SelectedIndex);
                     }
+                    writePokemon.Write((Byte)numericUpDown23.Value); // Ball Capsule
+
                     if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                     {
-                        writePokemon.Write((UInt16)0x0);
+                        writePokemon.Write((Byte)0x0);
                     }
-                    if (numericUpDown1.Value > 2)
+                    if (numericUpDown1.Value > 2) //If number of Pokemon > 2, write third Pokemon
                     {
-                        writePokemon.Write((UInt16)numericUpDown9.Value);
-                        writePokemon.Write((UInt16)numericUpDown11.Value);
+                        writePokemon.Write((Byte)numericUpDown9.Value); // IVs
+                        writePokemon.Write((Byte)numericUpDown26.Value); // Ability
+                        writePokemon.Write((UInt16)numericUpDown11.Value); // Level
                         writePokemon.Write((UInt16)(comboBox19.SelectedIndex + (numericUpDown10.Value * 1024)));
                         if (checkBoxItems.Checked == true)
                         {
@@ -1113,14 +1138,17 @@ namespace WindowsFormsApplication1
                             writePokemon.Write((UInt16)comboBox21.SelectedIndex);
                             writePokemon.Write((UInt16)comboBox20.SelectedIndex);
                         }
+                        writePokemon.Write((Byte)numericUpDown25.Value); // Ball capsule
+
                         if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                         {
-                            writePokemon.Write((UInt16)0x0);
+                            writePokemon.Write((Byte)0x0);
                         }
-                        if (numericUpDown1.Value > 3)
+                        if (numericUpDown1.Value > 3) //If number of Pokemon > 3, write fourth Pokemon
                         {
-                            writePokemon.Write((UInt16)numericUpDown12.Value);
-                            writePokemon.Write((UInt16)numericUpDown14.Value);
+                            writePokemon.Write((Byte)numericUpDown12.Value); // IVs
+                            writePokemon.Write((Byte)numericUpDown28.Value); // Ability
+                            writePokemon.Write((UInt16)numericUpDown14.Value); // Level
                             writePokemon.Write((UInt16)(comboBox25.SelectedIndex + (numericUpDown13.Value * 1024)));
                             if (checkBoxItems.Checked == true)
                             {
@@ -1133,14 +1161,17 @@ namespace WindowsFormsApplication1
                                 writePokemon.Write((UInt16)comboBox27.SelectedIndex);
                                 writePokemon.Write((UInt16)comboBox26.SelectedIndex);
                             }
+                            writePokemon.Write((Byte)numericUpDown27.Value); // Ball Capsule
+
                             if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                             {
-                                writePokemon.Write((UInt16)0x0);
+                                writePokemon.Write((Byte)0x0);
                             }
-                            if (numericUpDown1.Value > 4)
+                            if (numericUpDown1.Value > 4) //If number of Pokemon > 5, write fifth Pokemon
                             {
-                                writePokemon.Write((UInt16)numericUpDown15.Value);
-                                writePokemon.Write((UInt16)numericUpDown17.Value);
+                                writePokemon.Write((Byte)numericUpDown15.Value); // IVs
+                                writePokemon.Write((Byte)numericUpDown30.Value); // Ability
+                                writePokemon.Write((UInt16)numericUpDown17.Value); // Level
                                 writePokemon.Write((UInt16)(comboBox31.SelectedIndex + (numericUpDown16.Value * 1024)));
                                 if (checkBoxItems.Checked == true)
                                 {
@@ -1153,14 +1184,16 @@ namespace WindowsFormsApplication1
                                     writePokemon.Write((UInt16)comboBox33.SelectedIndex);
                                     writePokemon.Write((UInt16)comboBox32.SelectedIndex);
                                 }
+                                writePokemon.Write((Byte)numericUpDown29.Value); // Ball Capsule
                                 if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                                 {
-                                    writePokemon.Write((UInt16)0x0);
+                                    writePokemon.Write((Byte)0x0);
                                 }
-                                if (numericUpDown1.Value > 5)
+                                if (numericUpDown1.Value > 5) //If number of Pokemon > 5, write sixth Pokemon
                                 {
-                                    writePokemon.Write((UInt16)numericUpDown18.Value);
-                                    writePokemon.Write((UInt16)numericUpDown20.Value);
+                                    writePokemon.Write((Byte)numericUpDown18.Value); // IVs
+                                    writePokemon.Write((Byte)numericUpDown32.Value); // Ability
+                                    writePokemon.Write((UInt16)numericUpDown20.Value); // Level
                                     writePokemon.Write((UInt16)(comboBox37.SelectedIndex + (numericUpDown19.Value * 1024)));
                                     if (checkBoxItems.Checked == true)
                                     {
@@ -1173,9 +1206,11 @@ namespace WindowsFormsApplication1
                                         writePokemon.Write((UInt16)comboBox39.SelectedIndex);
                                         writePokemon.Write((UInt16)comboBox38.SelectedIndex);
                                     }
+                                    writePokemon.Write((Byte)numericUpDown31.Value); // Ability
+
                                     if (Form1.gameID == 0x45555043 || Form1.gameID == 0x53555043 || Form1.gameID == 0x46555043 || Form1.gameID == 0x49555043 || Form1.gameID == 0x44555043 || Form1.gameID == 0x4A555043 || Form1.gameID == 0x4B555043 || Form1.gameID == 0x454B5049 || Form1.gameID == 0x45475049 || Form1.gameID == 0x534B5049 || Form1.gameID == 0x53475049 || Form1.gameID == 0x464B5049 || Form1.gameID == 0x46475049 || Form1.gameID == 0x494B5049 || Form1.gameID == 0x49475049 || Form1.gameID == 0x444B5049 || Form1.gameID == 0x44475049 || Form1.gameID == 0x4A4B5049 || Form1.gameID == 0x4A475049 || Form1.gameID == 0x4B4B5049 || Form1.gameID == 0x4B475049)
                                     {
-                                        writePokemon.Write((UInt16)0x0);
+                                        writePokemon.Write((Byte)0x0);
                                     }
                                 }
                             }
@@ -1189,7 +1224,8 @@ namespace WindowsFormsApplication1
             names[comboBox1.SelectedIndex] = textBox1.Text;
             saveText();
             comboBox1.Items.RemoveAt(selectedID);
-            comboBox1.Items.Insert(selectedID, selectedID + ": " + currentTrainerClass[selectedClass] + " " + names[selectedID]);
+            //comboBox1.Items.Insert(selectedID, selectedID + ": " + currentTrainerClass[selectedClass] + " " + names[selectedID]);
+            comboBox1.Items.Insert(selectedID, names[selectedID] + " - " + selectedID); // new format
             comboBox1.SelectedIndex = selectedID;
         }
 
