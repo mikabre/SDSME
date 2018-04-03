@@ -372,6 +372,10 @@
       <DependentUpon>WinFormStrings.zh.resx</DependentUpon>
     </Compile>
     <Content Include="1015i.ico" />
+    <Content Include="lib\HelixToolkit.dll" />
+    <Content Include="lib\OpenTK.dll" />
+    <Content Include="lib\Tao.OpenGl.dll" />
+    <Content Include="lib\Tao.Platform.Windows.dll" />
     <EmbeddedResource Include="Form10 3D Editor.resx">
       <DependentUpon>Form10 3D Editor.cs</DependentUpon>
     </EmbeddedResource>
