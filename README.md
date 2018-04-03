@@ -1,22 +1,18 @@
 # SDSME
 Source code from Spiky's DS Map Editor
 
-This repository contains the latest source files from Spiky's DS Map Editor, as well as a collection of all the builds released to the public.
+This repository contains updated source files from Spiky's DS Map Editor.
 
 Feel free to download these files and edit them! However, please note the following:
 
+-Development of SDSME by Spiky-Eared Pichu (the original creator of the tool) has been halted; while I don't know what Spiky's plans for SDSME were, I intend to develop the tool into an "all-in-one" editing suite for the DS-era Pokémon games.
 
+-Current focus is on fixing bugs (e.g. the script editor doesn't save, the HGSS wild editor doesn't write some encounter rate data) and improving existing functionality
 
--Development of SDSME from my part (Spiky-Eared Pichu) has been halted, so there will be little to no updates to the code from now.
+-The trainer editor and DPPt wild editor have been updated, and should be fully functional and safe to use
 
--The code is provided as it was the last time it was edited by me. I began working on version 1.9.0 but never managed to finish the work, so expect crashes, bugs and unfinished features.
+-Planned future additions will include an item editor, move editor and Pokémon editor
 
--There are many comments throughout the source code, but most of it is pretty messy. I'm sorry.
+-Most of the code is quite messy and uncommented
 
--SDSME is now open-source software, but before then there were many people who contributed to its development that would certainly appreciate if they were credited in future forks.
-
-
-
-Thanks for your understanding, and enjoy! I hope you like it and find the motivation that led me to the creation of this software. Nintendo DS Pokémon hacking needs to keep progressing!
-
-~Spiky Eared Pichu
+Full credit for the bulk of the code goes to Spiky Eared Pichu, and other contributors to earlier versions of SDSME.
