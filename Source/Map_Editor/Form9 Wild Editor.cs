@@ -827,7 +827,7 @@ namespace WindowsFormsApplication1
                     comboBox21.SelectedIndex = (int)readWild.ReadUInt32();
                     comboBox22.SelectedIndex = (int)readWild.ReadUInt32();
                     comboBox23.SelectedIndex = (int)readWild.ReadUInt32();
-                    readWild.BaseStream.Position = 0xA4;
+                    readWild.BaseStream.Position = 0xA4; //Dual Slot encounters
                     comboBox24.SelectedIndex = (int)readWild.ReadUInt32();
                     comboBox25.SelectedIndex = (int)readWild.ReadUInt32();
                     comboBox26.SelectedIndex = (int)readWild.ReadUInt32();
@@ -1011,7 +1011,7 @@ namespace WindowsFormsApplication1
                     numericUpDown20.Value = readWild.ReadByte();
                     comboBox37.SelectedIndex = readWild.ReadUInt16();
                     numericUpDown23.Value = readWild.ReadByte();
-                    numericUpDown24.Value = readWild.ReadByte();
+                    numericUpDown22.Value = readWild.ReadByte();
                     comboBox38.SelectedIndex = readWild.ReadUInt16();
                     // Rock Smash
                     numericUpDown75.Value = readWild.ReadByte();
@@ -1349,7 +1349,7 @@ namespace WindowsFormsApplication1
                 writeWild.Write((byte)numericUpDown23.Value);
                 writeWild.BaseStream.Position += 0x2;
                 writeWild.Write((uint)comboBox38.SelectedIndex);
-                writeWild.BaseStream.Position += 0x124;
+                writeWild.BaseStream.Position = 0x124;
                 // Old Rod
                 writeWild.Write((uint)numericUpDown25.Value);
                 writeWild.Write((byte)numericUpDown34.Value);
@@ -1434,8 +1434,8 @@ namespace WindowsFormsApplication1
                 writeWild.BaseStream.Position = 0x8;
                 writeWild.Write((byte)numericUpDown70.Value);
                 writeWild.Write((byte)numericUpDown69.Value);
-                writeWild.Write((byte)numericUpDown67.Value);
                 writeWild.Write((byte)numericUpDown68.Value);
+                writeWild.Write((byte)numericUpDown67.Value);
                 writeWild.Write((byte)numericUpDown66.Value);
                 writeWild.Write((byte)numericUpDown65.Value);
                 writeWild.Write((byte)numericUpDown64.Value);

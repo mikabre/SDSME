@@ -871,9 +871,9 @@
             // 
             // comboBox1
             // 
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -890,15 +890,14 @@
             // 
             // tabPage1
             // 
-            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox1);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
-            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Controls.Add(this.label23);
             this.groupBox5.Controls.Add(this.comboBox23);
             this.groupBox5.Controls.Add(this.label22);
@@ -907,6 +906,7 @@
             this.groupBox5.Controls.Add(this.comboBox21);
             this.groupBox5.Controls.Add(this.label20);
             this.groupBox5.Controls.Add(this.comboBox20);
+            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -917,9 +917,10 @@
             // 
             // comboBox23
             // 
-            resources.ApplyResources(this.comboBox23, "comboBox23");
-            this.comboBox23.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox23.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox23.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox23.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox23, "comboBox23");
             this.comboBox23.Name = "comboBox23";
             // 
             // label22
@@ -929,9 +930,10 @@
             // 
             // comboBox22
             // 
-            resources.ApplyResources(this.comboBox22, "comboBox22");
-            this.comboBox22.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox22.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox22.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox22.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox22, "comboBox22");
             this.comboBox22.Name = "comboBox22";
             // 
             // label21
@@ -941,9 +943,10 @@
             // 
             // comboBox21
             // 
-            resources.ApplyResources(this.comboBox21, "comboBox21");
-            this.comboBox21.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox21.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox21.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox21.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox21, "comboBox21");
             this.comboBox21.Name = "comboBox21";
             // 
             // label20
@@ -953,14 +956,14 @@
             // 
             // comboBox20
             // 
-            resources.ApplyResources(this.comboBox20, "comboBox20");
-            this.comboBox20.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox20.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox20.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox20.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox20, "comboBox20");
             this.comboBox20.Name = "comboBox20";
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.groupBox6);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
@@ -1003,35 +1006,37 @@
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.comboBox2);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
             // groupBox6
             // 
-            resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Controls.Add(this.groupBox11);
             this.groupBox6.Controls.Add(this.groupBox10);
             this.groupBox6.Controls.Add(this.groupBox9);
             this.groupBox6.Controls.Add(this.groupBox8);
             this.groupBox6.Controls.Add(this.groupBox7);
+            resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
             // 
             // groupBox11
             // 
-            resources.ApplyResources(this.groupBox11, "groupBox11");
             this.groupBox11.Controls.Add(this.comboBox32);
             this.groupBox11.Controls.Add(this.label32);
             this.groupBox11.Controls.Add(this.label33);
             this.groupBox11.Controls.Add(this.comboBox33);
+            resources.ApplyResources(this.groupBox11, "groupBox11");
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.TabStop = false;
             // 
             // comboBox32
             // 
-            resources.ApplyResources(this.comboBox32, "comboBox32");
-            this.comboBox32.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox32.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox32.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox32.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox32, "comboBox32");
             this.comboBox32.Name = "comboBox32";
             // 
             // label32
@@ -1046,26 +1051,28 @@
             // 
             // comboBox33
             // 
-            resources.ApplyResources(this.comboBox33, "comboBox33");
-            this.comboBox33.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox33.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox33.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox33.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox33, "comboBox33");
             this.comboBox33.Name = "comboBox33";
             // 
             // groupBox10
             // 
-            resources.ApplyResources(this.groupBox10, "groupBox10");
             this.groupBox10.Controls.Add(this.comboBox30);
             this.groupBox10.Controls.Add(this.label30);
             this.groupBox10.Controls.Add(this.label31);
             this.groupBox10.Controls.Add(this.comboBox31);
+            resources.ApplyResources(this.groupBox10, "groupBox10");
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.TabStop = false;
             // 
             // comboBox30
             // 
-            resources.ApplyResources(this.comboBox30, "comboBox30");
-            this.comboBox30.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox30.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox30.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox30.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox30, "comboBox30");
             this.comboBox30.Name = "comboBox30";
             // 
             // label30
@@ -1080,26 +1087,28 @@
             // 
             // comboBox31
             // 
-            resources.ApplyResources(this.comboBox31, "comboBox31");
-            this.comboBox31.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox31.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox31.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox31.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox31, "comboBox31");
             this.comboBox31.Name = "comboBox31";
             // 
             // groupBox9
             // 
-            resources.ApplyResources(this.groupBox9, "groupBox9");
             this.groupBox9.Controls.Add(this.comboBox28);
             this.groupBox9.Controls.Add(this.label28);
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Controls.Add(this.comboBox29);
+            resources.ApplyResources(this.groupBox9, "groupBox9");
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.TabStop = false;
             // 
             // comboBox28
             // 
-            resources.ApplyResources(this.comboBox28, "comboBox28");
-            this.comboBox28.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox28.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox28.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox28.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox28, "comboBox28");
             this.comboBox28.Name = "comboBox28";
             // 
             // label28
@@ -1114,26 +1123,28 @@
             // 
             // comboBox29
             // 
-            resources.ApplyResources(this.comboBox29, "comboBox29");
-            this.comboBox29.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox29.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox29.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox29.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox29, "comboBox29");
             this.comboBox29.Name = "comboBox29";
             // 
             // groupBox8
             // 
-            resources.ApplyResources(this.groupBox8, "groupBox8");
             this.groupBox8.Controls.Add(this.comboBox26);
             this.groupBox8.Controls.Add(this.label26);
             this.groupBox8.Controls.Add(this.label27);
             this.groupBox8.Controls.Add(this.comboBox27);
+            resources.ApplyResources(this.groupBox8, "groupBox8");
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.TabStop = false;
             // 
             // comboBox26
             // 
-            resources.ApplyResources(this.comboBox26, "comboBox26");
-            this.comboBox26.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox26.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox26.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox26.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox26, "comboBox26");
             this.comboBox26.Name = "comboBox26";
             // 
             // label26
@@ -1148,26 +1159,28 @@
             // 
             // comboBox27
             // 
-            resources.ApplyResources(this.comboBox27, "comboBox27");
-            this.comboBox27.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox27.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox27.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox27.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox27, "comboBox27");
             this.comboBox27.Name = "comboBox27";
             // 
             // groupBox7
             // 
-            resources.ApplyResources(this.groupBox7, "groupBox7");
             this.groupBox7.Controls.Add(this.comboBox24);
             this.groupBox7.Controls.Add(this.label24);
             this.groupBox7.Controls.Add(this.label25);
             this.groupBox7.Controls.Add(this.comboBox25);
+            resources.ApplyResources(this.groupBox7, "groupBox7");
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.TabStop = false;
             // 
             // comboBox24
             // 
-            resources.ApplyResources(this.comboBox24, "comboBox24");
-            this.comboBox24.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox24.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox24.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox24.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox24, "comboBox24");
             this.comboBox24.Name = "comboBox24";
             // 
             // label24
@@ -1182,26 +1195,28 @@
             // 
             // comboBox25
             // 
-            resources.ApplyResources(this.comboBox25, "comboBox25");
-            this.comboBox25.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox25.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox25.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox25.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox25, "comboBox25");
             this.comboBox25.Name = "comboBox25";
             // 
             // groupBox4
             // 
-            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Controls.Add(this.comboBox18);
             this.groupBox4.Controls.Add(this.label18);
             this.groupBox4.Controls.Add(this.label19);
             this.groupBox4.Controls.Add(this.comboBox19);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
             // 
             // comboBox18
             // 
-            resources.ApplyResources(this.comboBox18, "comboBox18");
-            this.comboBox18.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox18.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox18.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox18.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox18, "comboBox18");
             this.comboBox18.Name = "comboBox18";
             // 
             // label18
@@ -1216,26 +1231,28 @@
             // 
             // comboBox19
             // 
-            resources.ApplyResources(this.comboBox19, "comboBox19");
-            this.comboBox19.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox19.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox19.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox19.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox19, "comboBox19");
             this.comboBox19.Name = "comboBox19";
             // 
             // groupBox3
             // 
-            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.comboBox16);
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.comboBox17);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
             // comboBox16
             // 
-            resources.ApplyResources(this.comboBox16, "comboBox16");
-            this.comboBox16.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox16.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox16.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox16.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox16, "comboBox16");
             this.comboBox16.Name = "comboBox16";
             // 
             // label16
@@ -1250,26 +1267,28 @@
             // 
             // comboBox17
             // 
-            resources.ApplyResources(this.comboBox17, "comboBox17");
-            this.comboBox17.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox17.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox17.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox17.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox17, "comboBox17");
             this.comboBox17.Name = "comboBox17";
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.comboBox14);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.comboBox15);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
             // comboBox14
             // 
-            resources.ApplyResources(this.comboBox14, "comboBox14");
-            this.comboBox14.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox14.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox14.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox14.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox14, "comboBox14");
             this.comboBox14.Name = "comboBox14";
             // 
             // label14
@@ -1284,9 +1303,10 @@
             // 
             // comboBox15
             // 
-            resources.ApplyResources(this.comboBox15, "comboBox15");
-            this.comboBox15.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox15.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox15.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox15.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox15, "comboBox15");
             this.comboBox15.Name = "comboBox15";
             // 
             // numericUpDown13
@@ -1316,9 +1336,10 @@
             // 
             // comboBox13
             // 
-            resources.ApplyResources(this.comboBox13, "comboBox13");
-            this.comboBox13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox13.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox13.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox13.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox13, "comboBox13");
             this.comboBox13.Name = "comboBox13";
             // 
             // numericUpDown11
@@ -1333,9 +1354,10 @@
             // 
             // comboBox12
             // 
-            resources.ApplyResources(this.comboBox12, "comboBox12");
-            this.comboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox12.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox12.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox12.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox12, "comboBox12");
             this.comboBox12.Name = "comboBox12";
             // 
             // numericUpDown10
@@ -1350,9 +1372,10 @@
             // 
             // comboBox11
             // 
-            resources.ApplyResources(this.comboBox11, "comboBox11");
-            this.comboBox11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox11.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox11.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox11.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox11, "comboBox11");
             this.comboBox11.Name = "comboBox11";
             // 
             // numericUpDown9
@@ -1367,9 +1390,10 @@
             // 
             // comboBox10
             // 
-            resources.ApplyResources(this.comboBox10, "comboBox10");
-            this.comboBox10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox10.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox10.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox10.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox10, "comboBox10");
             this.comboBox10.Name = "comboBox10";
             // 
             // numericUpDown8
@@ -1384,9 +1408,10 @@
             // 
             // comboBox9
             // 
-            resources.ApplyResources(this.comboBox9, "comboBox9");
-            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox9.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox9.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox9.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox9, "comboBox9");
             this.comboBox9.Name = "comboBox9";
             // 
             // numericUpDown7
@@ -1401,9 +1426,10 @@
             // 
             // comboBox8
             // 
-            resources.ApplyResources(this.comboBox8, "comboBox8");
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox8.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox8, "comboBox8");
             this.comboBox8.Name = "comboBox8";
             // 
             // numericUpDown6
@@ -1418,9 +1444,10 @@
             // 
             // comboBox7
             // 
-            resources.ApplyResources(this.comboBox7, "comboBox7");
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox7.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox7.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox7.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox7, "comboBox7");
             this.comboBox7.Name = "comboBox7";
             // 
             // numericUpDown5
@@ -1435,9 +1462,10 @@
             // 
             // comboBox6
             // 
-            resources.ApplyResources(this.comboBox6, "comboBox6");
-            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox6.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox6.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox6.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox6, "comboBox6");
             this.comboBox6.Name = "comboBox6";
             // 
             // numericUpDown4
@@ -1452,9 +1480,10 @@
             // 
             // comboBox5
             // 
-            resources.ApplyResources(this.comboBox5, "comboBox5");
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox5.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox5, "comboBox5");
             this.comboBox5.Name = "comboBox5";
             // 
             // numericUpDown3
@@ -1469,9 +1498,10 @@
             // 
             // comboBox4
             // 
-            resources.ApplyResources(this.comboBox4, "comboBox4");
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox4.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox4, "comboBox4");
             this.comboBox4.Name = "comboBox4";
             // 
             // numericUpDown2
@@ -1486,9 +1516,10 @@
             // 
             // comboBox3
             // 
-            resources.ApplyResources(this.comboBox3, "comboBox3");
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox3.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox3, "comboBox3");
             this.comboBox3.Name = "comboBox3";
             // 
             // numericUpDown1
@@ -1503,22 +1534,22 @@
             // 
             // comboBox2
             // 
-            resources.ApplyResources(this.comboBox2, "comboBox2");
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox2.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.Name = "comboBox2";
             // 
             // tabPage3
             // 
-            resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Controls.Add(this.groupBox16);
             this.tabPage3.Controls.Add(this.groupBox17);
+            resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // groupBox16
             // 
-            resources.ApplyResources(this.groupBox16, "groupBox16");
             this.groupBox16.Controls.Add(this.comboBox54);
             this.groupBox16.Controls.Add(this.comboBox55);
             this.groupBox16.Controls.Add(this.label60);
@@ -1527,21 +1558,24 @@
             this.groupBox16.Controls.Add(this.comboBox57);
             this.groupBox16.Controls.Add(this.label59);
             this.groupBox16.Controls.Add(this.label58);
+            resources.ApplyResources(this.groupBox16, "groupBox16");
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.TabStop = false;
             // 
             // comboBox54
             // 
-            resources.ApplyResources(this.comboBox54, "comboBox54");
-            this.comboBox54.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox54.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox54.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox54.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox54, "comboBox54");
             this.comboBox54.Name = "comboBox54";
             // 
             // comboBox55
             // 
-            resources.ApplyResources(this.comboBox55, "comboBox55");
-            this.comboBox55.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox55.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox55.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox55.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox55, "comboBox55");
             this.comboBox55.Name = "comboBox55";
             // 
             // label60
@@ -1551,9 +1585,10 @@
             // 
             // comboBox56
             // 
-            resources.ApplyResources(this.comboBox56, "comboBox56");
-            this.comboBox56.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox56.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox56.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox56.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox56, "comboBox56");
             this.comboBox56.Name = "comboBox56";
             // 
             // label61
@@ -1563,9 +1598,10 @@
             // 
             // comboBox57
             // 
-            resources.ApplyResources(this.comboBox57, "comboBox57");
-            this.comboBox57.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox57.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox57.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox57.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox57, "comboBox57");
             this.comboBox57.Name = "comboBox57";
             // 
             // label59
@@ -1580,7 +1616,6 @@
             // 
             // groupBox17
             // 
-            resources.ApplyResources(this.groupBox17, "groupBox17");
             this.groupBox17.Controls.Add(this.groupBox20);
             this.groupBox17.Controls.Add(this.groupBox19);
             this.groupBox17.Controls.Add(this.groupBox18);
@@ -1646,12 +1681,12 @@
             this.groupBox17.Controls.Add(this.numericUpDown70);
             this.groupBox17.Controls.Add(this.label90);
             this.groupBox17.Controls.Add(this.comboBox85);
+            resources.ApplyResources(this.groupBox17, "groupBox17");
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.TabStop = false;
             // 
             // groupBox20
             // 
-            resources.ApplyResources(this.groupBox20, "groupBox20");
             this.groupBox20.Controls.Add(this.label62);
             this.groupBox20.Controls.Add(this.label63);
             this.groupBox20.Controls.Add(this.numericUpDown72);
@@ -1662,6 +1697,7 @@
             this.groupBox20.Controls.Add(this.comboBox98);
             this.groupBox20.Controls.Add(this.label64);
             this.groupBox20.Controls.Add(this.comboBox99);
+            resources.ApplyResources(this.groupBox20, "groupBox20");
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.TabStop = false;
             // 
@@ -1707,9 +1743,10 @@
             // 
             // comboBox98
             // 
-            resources.ApplyResources(this.comboBox98, "comboBox98");
-            this.comboBox98.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox98.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox98.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox98.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox98, "comboBox98");
             this.comboBox98.Name = "comboBox98";
             // 
             // label64
@@ -1719,47 +1756,51 @@
             // 
             // comboBox99
             // 
-            resources.ApplyResources(this.comboBox99, "comboBox99");
-            this.comboBox99.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox99.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox99.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox99.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox99, "comboBox99");
             this.comboBox99.Name = "comboBox99";
             // 
             // groupBox19
             // 
-            resources.ApplyResources(this.groupBox19, "groupBox19");
             this.groupBox19.Controls.Add(this.comboBox96);
             this.groupBox19.Controls.Add(this.comboBox97);
+            resources.ApplyResources(this.groupBox19, "groupBox19");
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.TabStop = false;
             // 
             // comboBox96
             // 
-            resources.ApplyResources(this.comboBox96, "comboBox96");
-            this.comboBox96.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox96.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox96.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox96.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox96, "comboBox96");
             this.comboBox96.Name = "comboBox96";
             // 
             // comboBox97
             // 
-            resources.ApplyResources(this.comboBox97, "comboBox97");
-            this.comboBox97.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox97.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox97.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox97.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox97, "comboBox97");
             this.comboBox97.Name = "comboBox97";
             // 
             // groupBox18
             // 
-            resources.ApplyResources(this.groupBox18, "groupBox18");
             this.groupBox18.Controls.Add(this.comboBox94);
             this.groupBox18.Controls.Add(this.label66);
             this.groupBox18.Controls.Add(this.comboBox95);
+            resources.ApplyResources(this.groupBox18, "groupBox18");
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.TabStop = false;
             // 
             // comboBox94
             // 
-            resources.ApplyResources(this.comboBox94, "comboBox94");
-            this.comboBox94.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox94.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox94.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox94.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox94, "comboBox94");
             this.comboBox94.Name = "comboBox94";
             // 
             // label66
@@ -1769,177 +1810,202 @@
             // 
             // comboBox95
             // 
-            resources.ApplyResources(this.comboBox95, "comboBox95");
-            this.comboBox95.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox95.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox95.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox95.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox95, "comboBox95");
             this.comboBox95.Name = "comboBox95";
             // 
             // comboBox70
             // 
-            resources.ApplyResources(this.comboBox70, "comboBox70");
-            this.comboBox70.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox70.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox70.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox70.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox70, "comboBox70");
             this.comboBox70.Name = "comboBox70";
             // 
             // comboBox71
             // 
-            resources.ApplyResources(this.comboBox71, "comboBox71");
-            this.comboBox71.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox71.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox71.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox71.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox71, "comboBox71");
             this.comboBox71.Name = "comboBox71";
             // 
             // comboBox72
             // 
-            resources.ApplyResources(this.comboBox72, "comboBox72");
-            this.comboBox72.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox72.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox72.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox72.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox72, "comboBox72");
             this.comboBox72.Name = "comboBox72";
             // 
             // comboBox73
             // 
-            resources.ApplyResources(this.comboBox73, "comboBox73");
-            this.comboBox73.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox73.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox73.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox73.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox73, "comboBox73");
             this.comboBox73.Name = "comboBox73";
             // 
             // comboBox86
             // 
-            resources.ApplyResources(this.comboBox86, "comboBox86");
-            this.comboBox86.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox86.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox86.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox86.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox86, "comboBox86");
             this.comboBox86.Name = "comboBox86";
             // 
             // comboBox87
             // 
-            resources.ApplyResources(this.comboBox87, "comboBox87");
-            this.comboBox87.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox87.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox87.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox87.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox87, "comboBox87");
             this.comboBox87.Name = "comboBox87";
             // 
             // comboBox88
             // 
-            resources.ApplyResources(this.comboBox88, "comboBox88");
-            this.comboBox88.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox88.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox88.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox88.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox88, "comboBox88");
             this.comboBox88.Name = "comboBox88";
             // 
             // comboBox89
             // 
-            resources.ApplyResources(this.comboBox89, "comboBox89");
-            this.comboBox89.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox89.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox89.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox89.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox89, "comboBox89");
             this.comboBox89.Name = "comboBox89";
             // 
             // comboBox90
             // 
-            resources.ApplyResources(this.comboBox90, "comboBox90");
-            this.comboBox90.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox90.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox90.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox90.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox90, "comboBox90");
             this.comboBox90.Name = "comboBox90";
             // 
             // comboBox91
             // 
-            resources.ApplyResources(this.comboBox91, "comboBox91");
-            this.comboBox91.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox91.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox91, "comboBox91");
             this.comboBox91.Name = "comboBox91";
             // 
             // comboBox92
             // 
-            resources.ApplyResources(this.comboBox92, "comboBox92");
-            this.comboBox92.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox92.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox92.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox92.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox92, "comboBox92");
             this.comboBox92.Name = "comboBox92";
             // 
             // comboBox93
             // 
-            resources.ApplyResources(this.comboBox93, "comboBox93");
-            this.comboBox93.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox93.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox93.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox93.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox93, "comboBox93");
             this.comboBox93.Name = "comboBox93";
             // 
             // comboBox58
             // 
-            resources.ApplyResources(this.comboBox58, "comboBox58");
-            this.comboBox58.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox58.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox58.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox58.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox58, "comboBox58");
             this.comboBox58.Name = "comboBox58";
             // 
             // comboBox59
             // 
-            resources.ApplyResources(this.comboBox59, "comboBox59");
-            this.comboBox59.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox59.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox59.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox59.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox59, "comboBox59");
             this.comboBox59.Name = "comboBox59";
             // 
             // comboBox60
             // 
-            resources.ApplyResources(this.comboBox60, "comboBox60");
-            this.comboBox60.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox60.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox60.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox60.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox60, "comboBox60");
             this.comboBox60.Name = "comboBox60";
             // 
             // comboBox61
             // 
-            resources.ApplyResources(this.comboBox61, "comboBox61");
-            this.comboBox61.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox61.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox61.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox61.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox61, "comboBox61");
             this.comboBox61.Name = "comboBox61";
             // 
             // comboBox62
             // 
-            resources.ApplyResources(this.comboBox62, "comboBox62");
-            this.comboBox62.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox62.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox62.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox62.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox62, "comboBox62");
             this.comboBox62.Name = "comboBox62";
             // 
             // comboBox63
             // 
-            resources.ApplyResources(this.comboBox63, "comboBox63");
-            this.comboBox63.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox63.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox63.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox63.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox63, "comboBox63");
             this.comboBox63.Name = "comboBox63";
             // 
             // comboBox64
             // 
-            resources.ApplyResources(this.comboBox64, "comboBox64");
-            this.comboBox64.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox64.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox64.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox64.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox64, "comboBox64");
             this.comboBox64.Name = "comboBox64";
             // 
             // comboBox65
             // 
-            resources.ApplyResources(this.comboBox65, "comboBox65");
-            this.comboBox65.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox65.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox65.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox65.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox65, "comboBox65");
             this.comboBox65.Name = "comboBox65";
             // 
             // comboBox66
             // 
-            resources.ApplyResources(this.comboBox66, "comboBox66");
-            this.comboBox66.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox66.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox66.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox66.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox66, "comboBox66");
             this.comboBox66.Name = "comboBox66";
             // 
             // comboBox67
             // 
-            resources.ApplyResources(this.comboBox67, "comboBox67");
-            this.comboBox67.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox67.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox67.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox67.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox67, "comboBox67");
             this.comboBox67.Name = "comboBox67";
             // 
             // comboBox68
             // 
-            resources.ApplyResources(this.comboBox68, "comboBox68");
-            this.comboBox68.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox68.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox68.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox68.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox68, "comboBox68");
             this.comboBox68.Name = "comboBox68";
             // 
             // comboBox69
             // 
-            resources.ApplyResources(this.comboBox69, "comboBox69");
-            this.comboBox69.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox69.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox69.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox69.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox69, "comboBox69");
             this.comboBox69.Name = "comboBox69";
             // 
             // numericUpDown58
@@ -1969,9 +2035,10 @@
             // 
             // comboBox74
             // 
-            resources.ApplyResources(this.comboBox74, "comboBox74");
-            this.comboBox74.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox74.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox74.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox74.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox74, "comboBox74");
             this.comboBox74.Name = "comboBox74";
             // 
             // numericUpDown60
@@ -1986,9 +2053,10 @@
             // 
             // comboBox75
             // 
-            resources.ApplyResources(this.comboBox75, "comboBox75");
-            this.comboBox75.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox75.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox75.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox75.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox75, "comboBox75");
             this.comboBox75.Name = "comboBox75";
             // 
             // numericUpDown61
@@ -2003,9 +2071,10 @@
             // 
             // comboBox76
             // 
-            resources.ApplyResources(this.comboBox76, "comboBox76");
-            this.comboBox76.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox76.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox76.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox76.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox76, "comboBox76");
             this.comboBox76.Name = "comboBox76";
             // 
             // numericUpDown62
@@ -2020,9 +2089,10 @@
             // 
             // comboBox77
             // 
-            resources.ApplyResources(this.comboBox77, "comboBox77");
-            this.comboBox77.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox77.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox77.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox77.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox77, "comboBox77");
             this.comboBox77.Name = "comboBox77";
             // 
             // numericUpDown63
@@ -2037,9 +2107,10 @@
             // 
             // comboBox78
             // 
-            resources.ApplyResources(this.comboBox78, "comboBox78");
-            this.comboBox78.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox78.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox78.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox78.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox78, "comboBox78");
             this.comboBox78.Name = "comboBox78";
             // 
             // numericUpDown64
@@ -2054,9 +2125,10 @@
             // 
             // comboBox79
             // 
-            resources.ApplyResources(this.comboBox79, "comboBox79");
-            this.comboBox79.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox79.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox79.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox79.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox79, "comboBox79");
             this.comboBox79.Name = "comboBox79";
             // 
             // numericUpDown65
@@ -2071,9 +2143,10 @@
             // 
             // comboBox80
             // 
-            resources.ApplyResources(this.comboBox80, "comboBox80");
-            this.comboBox80.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox80.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox80.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox80.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox80, "comboBox80");
             this.comboBox80.Name = "comboBox80";
             // 
             // numericUpDown66
@@ -2088,9 +2161,10 @@
             // 
             // comboBox81
             // 
-            resources.ApplyResources(this.comboBox81, "comboBox81");
-            this.comboBox81.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox81.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox81.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox81.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox81, "comboBox81");
             this.comboBox81.Name = "comboBox81";
             // 
             // numericUpDown67
@@ -2105,9 +2179,10 @@
             // 
             // comboBox82
             // 
-            resources.ApplyResources(this.comboBox82, "comboBox82");
-            this.comboBox82.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox82.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox82.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox82.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox82, "comboBox82");
             this.comboBox82.Name = "comboBox82";
             // 
             // numericUpDown68
@@ -2122,9 +2197,10 @@
             // 
             // comboBox83
             // 
-            resources.ApplyResources(this.comboBox83, "comboBox83");
-            this.comboBox83.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox83.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox83.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox83.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox83, "comboBox83");
             this.comboBox83.Name = "comboBox83";
             // 
             // numericUpDown69
@@ -2139,9 +2215,10 @@
             // 
             // comboBox84
             // 
-            resources.ApplyResources(this.comboBox84, "comboBox84");
-            this.comboBox84.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox84.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox84.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox84.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox84, "comboBox84");
             this.comboBox84.Name = "comboBox84";
             // 
             // numericUpDown70
@@ -2156,24 +2233,24 @@
             // 
             // comboBox85
             // 
-            resources.ApplyResources(this.comboBox85, "comboBox85");
-            this.comboBox85.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox85.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox85.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox85.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox85, "comboBox85");
             this.comboBox85.Name = "comboBox85";
             // 
             // tabPage2
             // 
-            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Controls.Add(this.groupBox15);
             this.tabPage2.Controls.Add(this.groupBox14);
             this.tabPage2.Controls.Add(this.groupBox13);
             this.tabPage2.Controls.Add(this.groupBox12);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox15
             // 
-            resources.ApplyResources(this.groupBox15, "groupBox15");
             this.groupBox15.Controls.Add(this.numericUpDown47);
             this.groupBox15.Controls.Add(this.label52);
             this.groupBox15.Controls.Add(this.numericUpDown48);
@@ -2196,6 +2273,7 @@
             this.groupBox15.Controls.Add(this.numericUpDown57);
             this.groupBox15.Controls.Add(this.label57);
             this.groupBox15.Controls.Add(this.comboBox53);
+            resources.ApplyResources(this.groupBox15, "groupBox15");
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.TabStop = false;
             // 
@@ -2231,9 +2309,10 @@
             // 
             // comboBox49
             // 
-            resources.ApplyResources(this.comboBox49, "comboBox49");
-            this.comboBox49.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox49.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox49.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox49.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox49, "comboBox49");
             this.comboBox49.Name = "comboBox49";
             // 
             // numericUpDown50
@@ -2253,9 +2332,10 @@
             // 
             // comboBox50
             // 
-            resources.ApplyResources(this.comboBox50, "comboBox50");
-            this.comboBox50.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox50.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox50.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox50.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox50, "comboBox50");
             this.comboBox50.Name = "comboBox50";
             // 
             // numericUpDown52
@@ -2275,9 +2355,10 @@
             // 
             // comboBox51
             // 
-            resources.ApplyResources(this.comboBox51, "comboBox51");
-            this.comboBox51.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox51.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox51.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox51.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox51, "comboBox51");
             this.comboBox51.Name = "comboBox51";
             // 
             // numericUpDown54
@@ -2297,9 +2378,10 @@
             // 
             // comboBox52
             // 
-            resources.ApplyResources(this.comboBox52, "comboBox52");
-            this.comboBox52.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox52.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox52.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox52.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox52, "comboBox52");
             this.comboBox52.Name = "comboBox52";
             // 
             // numericUpDown56
@@ -2319,14 +2401,14 @@
             // 
             // comboBox53
             // 
-            resources.ApplyResources(this.comboBox53, "comboBox53");
-            this.comboBox53.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox53.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox53.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox53.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox53, "comboBox53");
             this.comboBox53.Name = "comboBox53";
             // 
             // groupBox14
             // 
-            resources.ApplyResources(this.groupBox14, "groupBox14");
             this.groupBox14.Controls.Add(this.numericUpDown36);
             this.groupBox14.Controls.Add(this.label46);
             this.groupBox14.Controls.Add(this.numericUpDown37);
@@ -2349,6 +2431,7 @@
             this.groupBox14.Controls.Add(this.numericUpDown46);
             this.groupBox14.Controls.Add(this.label51);
             this.groupBox14.Controls.Add(this.comboBox48);
+            resources.ApplyResources(this.groupBox14, "groupBox14");
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.TabStop = false;
             // 
@@ -2384,9 +2467,10 @@
             // 
             // comboBox44
             // 
-            resources.ApplyResources(this.comboBox44, "comboBox44");
-            this.comboBox44.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox44.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox44.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox44.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox44, "comboBox44");
             this.comboBox44.Name = "comboBox44";
             // 
             // numericUpDown39
@@ -2406,9 +2490,10 @@
             // 
             // comboBox45
             // 
-            resources.ApplyResources(this.comboBox45, "comboBox45");
-            this.comboBox45.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox45.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox45.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox45.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox45, "comboBox45");
             this.comboBox45.Name = "comboBox45";
             // 
             // numericUpDown41
@@ -2428,9 +2513,10 @@
             // 
             // comboBox46
             // 
-            resources.ApplyResources(this.comboBox46, "comboBox46");
-            this.comboBox46.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox46.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox46.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox46.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox46, "comboBox46");
             this.comboBox46.Name = "comboBox46";
             // 
             // numericUpDown43
@@ -2450,9 +2536,10 @@
             // 
             // comboBox47
             // 
-            resources.ApplyResources(this.comboBox47, "comboBox47");
-            this.comboBox47.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox47.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox47.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox47.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox47, "comboBox47");
             this.comboBox47.Name = "comboBox47";
             // 
             // numericUpDown45
@@ -2472,14 +2559,14 @@
             // 
             // comboBox48
             // 
-            resources.ApplyResources(this.comboBox48, "comboBox48");
-            this.comboBox48.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox48.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox48.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox48.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox48, "comboBox48");
             this.comboBox48.Name = "comboBox48";
             // 
             // groupBox13
             // 
-            resources.ApplyResources(this.groupBox13, "groupBox13");
             this.groupBox13.Controls.Add(this.numericUpDown25);
             this.groupBox13.Controls.Add(this.label40);
             this.groupBox13.Controls.Add(this.numericUpDown26);
@@ -2502,6 +2589,7 @@
             this.groupBox13.Controls.Add(this.numericUpDown35);
             this.groupBox13.Controls.Add(this.label45);
             this.groupBox13.Controls.Add(this.comboBox43);
+            resources.ApplyResources(this.groupBox13, "groupBox13");
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.TabStop = false;
             // 
@@ -2537,9 +2625,10 @@
             // 
             // comboBox39
             // 
-            resources.ApplyResources(this.comboBox39, "comboBox39");
-            this.comboBox39.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox39.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox39.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox39.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox39, "comboBox39");
             this.comboBox39.Name = "comboBox39";
             // 
             // numericUpDown28
@@ -2559,9 +2648,10 @@
             // 
             // comboBox40
             // 
-            resources.ApplyResources(this.comboBox40, "comboBox40");
-            this.comboBox40.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox40.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox40.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox40.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox40, "comboBox40");
             this.comboBox40.Name = "comboBox40";
             // 
             // numericUpDown30
@@ -2581,9 +2671,10 @@
             // 
             // comboBox41
             // 
-            resources.ApplyResources(this.comboBox41, "comboBox41");
-            this.comboBox41.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox41.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox41.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox41.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox41, "comboBox41");
             this.comboBox41.Name = "comboBox41";
             // 
             // numericUpDown32
@@ -2603,9 +2694,10 @@
             // 
             // comboBox42
             // 
-            resources.ApplyResources(this.comboBox42, "comboBox42");
-            this.comboBox42.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox42.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox42.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox42.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox42, "comboBox42");
             this.comboBox42.Name = "comboBox42";
             // 
             // numericUpDown34
@@ -2625,14 +2717,14 @@
             // 
             // comboBox43
             // 
-            resources.ApplyResources(this.comboBox43, "comboBox43");
-            this.comboBox43.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox43.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox43.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox43.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox43, "comboBox43");
             this.comboBox43.Name = "comboBox43";
             // 
             // groupBox12
             // 
-            resources.ApplyResources(this.groupBox12, "groupBox12");
             this.groupBox12.Controls.Add(this.numericUpDown24);
             this.groupBox12.Controls.Add(this.label39);
             this.groupBox12.Controls.Add(this.numericUpDown22);
@@ -2655,6 +2747,7 @@
             this.groupBox12.Controls.Add(this.numericUpDown14);
             this.groupBox12.Controls.Add(this.label34);
             this.groupBox12.Controls.Add(this.comboBox34);
+            resources.ApplyResources(this.groupBox12, "groupBox12");
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.TabStop = false;
             // 
@@ -2690,9 +2783,10 @@
             // 
             // comboBox38
             // 
-            resources.ApplyResources(this.comboBox38, "comboBox38");
-            this.comboBox38.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox38.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox38.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox38.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox38, "comboBox38");
             this.comboBox38.Name = "comboBox38";
             // 
             // numericUpDown20
@@ -2712,9 +2806,10 @@
             // 
             // comboBox37
             // 
-            resources.ApplyResources(this.comboBox37, "comboBox37");
-            this.comboBox37.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox37.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox37.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox37.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox37, "comboBox37");
             this.comboBox37.Name = "comboBox37";
             // 
             // numericUpDown18
@@ -2734,9 +2829,10 @@
             // 
             // comboBox36
             // 
-            resources.ApplyResources(this.comboBox36, "comboBox36");
-            this.comboBox36.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox36.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox36.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox36.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox36, "comboBox36");
             this.comboBox36.Name = "comboBox36";
             // 
             // numericUpDown16
@@ -2756,9 +2852,10 @@
             // 
             // comboBox35
             // 
-            resources.ApplyResources(this.comboBox35, "comboBox35");
-            this.comboBox35.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox35.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox35.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox35.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox35, "comboBox35");
             this.comboBox35.Name = "comboBox35";
             // 
             // numericUpDown15
@@ -2778,14 +2875,14 @@
             // 
             // comboBox34
             // 
-            resources.ApplyResources(this.comboBox34, "comboBox34");
-            this.comboBox34.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox34.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox34.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox34.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox34, "comboBox34");
             this.comboBox34.Name = "comboBox34";
             // 
             // tabPage4
             // 
-            resources.ApplyResources(this.tabPage4, "tabPage4");
             this.tabPage4.Controls.Add(this.label77);
             this.tabPage4.Controls.Add(this.label76);
             this.tabPage4.Controls.Add(this.label75);
@@ -2801,6 +2898,7 @@
             this.tabPage4.Controls.Add(this.groupBox23);
             this.tabPage4.Controls.Add(this.groupBox22);
             this.tabPage4.Controls.Add(this.groupBox21);
+            resources.ApplyResources(this.tabPage4, "tabPage4");
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
@@ -2866,7 +2964,6 @@
             // 
             // groupBox23
             // 
-            resources.ApplyResources(this.groupBox23, "groupBox23");
             this.groupBox23.Controls.Add(this.label103);
             this.groupBox23.Controls.Add(this.numericUpDown223);
             this.groupBox23.Controls.Add(this.numericUpDown222);
@@ -2917,6 +3014,7 @@
             this.groupBox23.Controls.Add(this.comboBox133);
             this.groupBox23.Controls.Add(this.comboBox134);
             this.groupBox23.Controls.Add(this.comboBox135);
+            resources.ApplyResources(this.groupBox23, "groupBox23");
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.TabStop = false;
             // 
@@ -3117,91 +3215,102 @@
             // 
             // comboBox124
             // 
-            resources.ApplyResources(this.comboBox124, "comboBox124");
-            this.comboBox124.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox124.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox124.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox124.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox124, "comboBox124");
             this.comboBox124.Name = "comboBox124";
             // 
             // comboBox125
             // 
-            resources.ApplyResources(this.comboBox125, "comboBox125");
-            this.comboBox125.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox125.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox125.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox125.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox125, "comboBox125");
             this.comboBox125.Name = "comboBox125";
             // 
             // comboBox126
             // 
-            resources.ApplyResources(this.comboBox126, "comboBox126");
-            this.comboBox126.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox126.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox126.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox126.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox126, "comboBox126");
             this.comboBox126.Name = "comboBox126";
             // 
             // comboBox127
             // 
-            resources.ApplyResources(this.comboBox127, "comboBox127");
-            this.comboBox127.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox127.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox127.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox127.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox127, "comboBox127");
             this.comboBox127.Name = "comboBox127";
             // 
             // comboBox128
             // 
-            resources.ApplyResources(this.comboBox128, "comboBox128");
-            this.comboBox128.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox128.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox128.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox128.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox128, "comboBox128");
             this.comboBox128.Name = "comboBox128";
             // 
             // comboBox129
             // 
-            resources.ApplyResources(this.comboBox129, "comboBox129");
-            this.comboBox129.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox129.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox129.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox129.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox129, "comboBox129");
             this.comboBox129.Name = "comboBox129";
             // 
             // comboBox130
             // 
-            resources.ApplyResources(this.comboBox130, "comboBox130");
-            this.comboBox130.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox130.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox130.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox130.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox130, "comboBox130");
             this.comboBox130.Name = "comboBox130";
             // 
             // comboBox131
             // 
-            resources.ApplyResources(this.comboBox131, "comboBox131");
-            this.comboBox131.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox131.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox131.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox131.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox131, "comboBox131");
             this.comboBox131.Name = "comboBox131";
             // 
             // comboBox132
             // 
-            resources.ApplyResources(this.comboBox132, "comboBox132");
-            this.comboBox132.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox132.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox132.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox132.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox132, "comboBox132");
             this.comboBox132.Name = "comboBox132";
             // 
             // comboBox133
             // 
-            resources.ApplyResources(this.comboBox133, "comboBox133");
-            this.comboBox133.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox133.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox133.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox133.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox133, "comboBox133");
             this.comboBox133.Name = "comboBox133";
             // 
             // comboBox134
             // 
-            resources.ApplyResources(this.comboBox134, "comboBox134");
-            this.comboBox134.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox134.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox134.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox134.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox134, "comboBox134");
             this.comboBox134.Name = "comboBox134";
             // 
             // comboBox135
             // 
-            resources.ApplyResources(this.comboBox135, "comboBox135");
-            this.comboBox135.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox135.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox135.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox135.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox135, "comboBox135");
             this.comboBox135.Name = "comboBox135";
             // 
             // groupBox22
             // 
-            resources.ApplyResources(this.groupBox22, "groupBox22");
             this.groupBox22.Controls.Add(this.label102);
             this.groupBox22.Controls.Add(this.numericUpDown211);
             this.groupBox22.Controls.Add(this.numericUpDown210);
@@ -3252,6 +3361,7 @@
             this.groupBox22.Controls.Add(this.comboBox121);
             this.groupBox22.Controls.Add(this.comboBox122);
             this.groupBox22.Controls.Add(this.comboBox123);
+            resources.ApplyResources(this.groupBox22, "groupBox22");
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.TabStop = false;
             // 
@@ -3452,91 +3562,102 @@
             // 
             // comboBox112
             // 
-            resources.ApplyResources(this.comboBox112, "comboBox112");
-            this.comboBox112.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox112.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox112.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox112.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox112, "comboBox112");
             this.comboBox112.Name = "comboBox112";
             // 
             // comboBox113
             // 
-            resources.ApplyResources(this.comboBox113, "comboBox113");
-            this.comboBox113.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox113.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox113.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox113.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox113, "comboBox113");
             this.comboBox113.Name = "comboBox113";
             // 
             // comboBox114
             // 
-            resources.ApplyResources(this.comboBox114, "comboBox114");
-            this.comboBox114.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox114.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox114.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox114.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox114, "comboBox114");
             this.comboBox114.Name = "comboBox114";
             // 
             // comboBox115
             // 
-            resources.ApplyResources(this.comboBox115, "comboBox115");
-            this.comboBox115.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox115.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox115.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox115.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox115, "comboBox115");
             this.comboBox115.Name = "comboBox115";
             // 
             // comboBox116
             // 
-            resources.ApplyResources(this.comboBox116, "comboBox116");
-            this.comboBox116.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox116.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox116.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox116.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox116, "comboBox116");
             this.comboBox116.Name = "comboBox116";
             // 
             // comboBox117
             // 
-            resources.ApplyResources(this.comboBox117, "comboBox117");
-            this.comboBox117.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox117.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox117.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox117.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox117, "comboBox117");
             this.comboBox117.Name = "comboBox117";
             // 
             // comboBox118
             // 
-            resources.ApplyResources(this.comboBox118, "comboBox118");
-            this.comboBox118.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox118.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox118.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox118.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox118, "comboBox118");
             this.comboBox118.Name = "comboBox118";
             // 
             // comboBox119
             // 
-            resources.ApplyResources(this.comboBox119, "comboBox119");
-            this.comboBox119.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox119.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox119.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox119.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox119, "comboBox119");
             this.comboBox119.Name = "comboBox119";
             // 
             // comboBox120
             // 
-            resources.ApplyResources(this.comboBox120, "comboBox120");
-            this.comboBox120.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox120.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox120.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox120.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox120, "comboBox120");
             this.comboBox120.Name = "comboBox120";
             // 
             // comboBox121
             // 
-            resources.ApplyResources(this.comboBox121, "comboBox121");
-            this.comboBox121.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox121.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox121.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox121.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox121, "comboBox121");
             this.comboBox121.Name = "comboBox121";
             // 
             // comboBox122
             // 
-            resources.ApplyResources(this.comboBox122, "comboBox122");
-            this.comboBox122.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox122.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox122.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox122.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox122, "comboBox122");
             this.comboBox122.Name = "comboBox122";
             // 
             // comboBox123
             // 
-            resources.ApplyResources(this.comboBox123, "comboBox123");
-            this.comboBox123.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox123.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox123.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox123.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox123, "comboBox123");
             this.comboBox123.Name = "comboBox123";
             // 
             // groupBox21
             // 
-            resources.ApplyResources(this.groupBox21, "groupBox21");
             this.groupBox21.Controls.Add(this.label101);
             this.groupBox21.Controls.Add(this.numericUpDown199);
             this.groupBox21.Controls.Add(this.numericUpDown198);
@@ -3587,6 +3708,7 @@
             this.groupBox21.Controls.Add(this.comboBox102);
             this.groupBox21.Controls.Add(this.comboBox101);
             this.groupBox21.Controls.Add(this.comboBox100);
+            resources.ApplyResources(this.groupBox21, "groupBox21");
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.TabStop = false;
             // 
@@ -3787,91 +3909,102 @@
             // 
             // comboBox111
             // 
-            resources.ApplyResources(this.comboBox111, "comboBox111");
-            this.comboBox111.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox111.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox111.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox111.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox111, "comboBox111");
             this.comboBox111.Name = "comboBox111";
             // 
             // comboBox110
             // 
-            resources.ApplyResources(this.comboBox110, "comboBox110");
-            this.comboBox110.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox110.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox110.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox110.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox110, "comboBox110");
             this.comboBox110.Name = "comboBox110";
             // 
             // comboBox109
             // 
-            resources.ApplyResources(this.comboBox109, "comboBox109");
-            this.comboBox109.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox109.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox109.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox109.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox109, "comboBox109");
             this.comboBox109.Name = "comboBox109";
             // 
             // comboBox108
             // 
-            resources.ApplyResources(this.comboBox108, "comboBox108");
-            this.comboBox108.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox108.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox108.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox108.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox108, "comboBox108");
             this.comboBox108.Name = "comboBox108";
             // 
             // comboBox107
             // 
-            resources.ApplyResources(this.comboBox107, "comboBox107");
-            this.comboBox107.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox107.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox107.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox107.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox107, "comboBox107");
             this.comboBox107.Name = "comboBox107";
             // 
             // comboBox106
             // 
-            resources.ApplyResources(this.comboBox106, "comboBox106");
-            this.comboBox106.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox106.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox106.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox106.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox106, "comboBox106");
             this.comboBox106.Name = "comboBox106";
             // 
             // comboBox105
             // 
-            resources.ApplyResources(this.comboBox105, "comboBox105");
-            this.comboBox105.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox105.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox105.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox105.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox105, "comboBox105");
             this.comboBox105.Name = "comboBox105";
             // 
             // comboBox104
             // 
-            resources.ApplyResources(this.comboBox104, "comboBox104");
-            this.comboBox104.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox104.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox104.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox104.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox104, "comboBox104");
             this.comboBox104.Name = "comboBox104";
             // 
             // comboBox103
             // 
-            resources.ApplyResources(this.comboBox103, "comboBox103");
-            this.comboBox103.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox103.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox103.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox103.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox103, "comboBox103");
             this.comboBox103.Name = "comboBox103";
             // 
             // comboBox102
             // 
-            resources.ApplyResources(this.comboBox102, "comboBox102");
-            this.comboBox102.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox102.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox102.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox102.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox102, "comboBox102");
             this.comboBox102.Name = "comboBox102";
             // 
             // comboBox101
             // 
-            resources.ApplyResources(this.comboBox101, "comboBox101");
-            this.comboBox101.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox101.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox101.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox101.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox101, "comboBox101");
             this.comboBox101.Name = "comboBox101";
             // 
             // comboBox100
             // 
-            resources.ApplyResources(this.comboBox100, "comboBox100");
-            this.comboBox100.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox100.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox100.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox100.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox100, "comboBox100");
             this.comboBox100.Name = "comboBox100";
             // 
             // tabPage5
             // 
-            resources.ApplyResources(this.tabPage5, "tabPage5");
             this.tabPage5.Controls.Add(this.label100);
             this.tabPage5.Controls.Add(this.label99);
             this.tabPage5.Controls.Add(this.label98);
@@ -3884,6 +4017,7 @@
             this.tabPage5.Controls.Add(this.label91);
             this.tabPage5.Controls.Add(this.groupBox29);
             this.tabPage5.Controls.Add(this.groupBox28);
+            resources.ApplyResources(this.tabPage5, "tabPage5");
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
@@ -3939,15 +4073,14 @@
             // 
             // groupBox29
             // 
-            resources.ApplyResources(this.groupBox29, "groupBox29");
             this.groupBox29.Controls.Add(this.groupBox27);
             this.groupBox29.Controls.Add(this.groupBox26);
+            resources.ApplyResources(this.groupBox29, "groupBox29");
             this.groupBox29.Name = "groupBox29";
             this.groupBox29.TabStop = false;
             // 
             // groupBox27
             // 
-            resources.ApplyResources(this.groupBox27, "groupBox27");
             this.groupBox27.Controls.Add(this.label107);
             this.groupBox27.Controls.Add(this.numericUpDown250);
             this.groupBox27.Controls.Add(this.numericUpDown243);
@@ -3970,6 +4103,7 @@
             this.groupBox27.Controls.Add(this.numericUpDown186);
             this.groupBox27.Controls.Add(this.numericUpDown187);
             this.groupBox27.Controls.Add(this.comboBox155);
+            resources.ApplyResources(this.groupBox27, "groupBox27");
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.TabStop = false;
             // 
@@ -4055,30 +4189,34 @@
             // 
             // comboBox151
             // 
-            resources.ApplyResources(this.comboBox151, "comboBox151");
-            this.comboBox151.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox151.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox151.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox151.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox151, "comboBox151");
             this.comboBox151.Name = "comboBox151";
             // 
             // comboBox152
             // 
-            resources.ApplyResources(this.comboBox152, "comboBox152");
-            this.comboBox152.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox152.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox152.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox152.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox152, "comboBox152");
             this.comboBox152.Name = "comboBox152";
             // 
             // comboBox153
             // 
-            resources.ApplyResources(this.comboBox153, "comboBox153");
-            this.comboBox153.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox153.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox153.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox153.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox153, "comboBox153");
             this.comboBox153.Name = "comboBox153";
             // 
             // comboBox154
             // 
-            resources.ApplyResources(this.comboBox154, "comboBox154");
-            this.comboBox154.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox154.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox154.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox154.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox154, "comboBox154");
             this.comboBox154.Name = "comboBox154";
             // 
             // numericUpDown186
@@ -4093,14 +4231,14 @@
             // 
             // comboBox155
             // 
-            resources.ApplyResources(this.comboBox155, "comboBox155");
-            this.comboBox155.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox155.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox155.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox155.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox155, "comboBox155");
             this.comboBox155.Name = "comboBox155";
             // 
             // groupBox26
             // 
-            resources.ApplyResources(this.groupBox26, "groupBox26");
             this.groupBox26.Controls.Add(this.label106);
             this.groupBox26.Controls.Add(this.numericUpDown238);
             this.groupBox26.Controls.Add(this.numericUpDown249);
@@ -4123,6 +4261,7 @@
             this.groupBox26.Controls.Add(this.comboBox149);
             this.groupBox26.Controls.Add(this.numericUpDown176);
             this.groupBox26.Controls.Add(this.comboBox150);
+            resources.ApplyResources(this.groupBox26, "groupBox26");
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.TabStop = false;
             // 
@@ -4213,30 +4352,34 @@
             // 
             // comboBox146
             // 
-            resources.ApplyResources(this.comboBox146, "comboBox146");
-            this.comboBox146.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox146.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox146.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox146.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox146, "comboBox146");
             this.comboBox146.Name = "comboBox146";
             // 
             // comboBox147
             // 
-            resources.ApplyResources(this.comboBox147, "comboBox147");
-            this.comboBox147.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox147.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox147.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox147.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox147, "comboBox147");
             this.comboBox147.Name = "comboBox147";
             // 
             // comboBox148
             // 
-            resources.ApplyResources(this.comboBox148, "comboBox148");
-            this.comboBox148.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox148.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox148.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox148.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox148, "comboBox148");
             this.comboBox148.Name = "comboBox148";
             // 
             // comboBox149
             // 
-            resources.ApplyResources(this.comboBox149, "comboBox149");
-            this.comboBox149.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox149.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox149.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox149.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox149, "comboBox149");
             this.comboBox149.Name = "comboBox149";
             // 
             // numericUpDown176
@@ -4246,22 +4389,22 @@
             // 
             // comboBox150
             // 
-            resources.ApplyResources(this.comboBox150, "comboBox150");
-            this.comboBox150.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox150.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox150.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox150.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox150, "comboBox150");
             this.comboBox150.Name = "comboBox150";
             // 
             // groupBox28
             // 
-            resources.ApplyResources(this.groupBox28, "groupBox28");
             this.groupBox28.Controls.Add(this.groupBox24);
             this.groupBox28.Controls.Add(this.groupBox25);
+            resources.ApplyResources(this.groupBox28, "groupBox28");
             this.groupBox28.Name = "groupBox28";
             this.groupBox28.TabStop = false;
             // 
             // groupBox24
             // 
-            resources.ApplyResources(this.groupBox24, "groupBox24");
             this.groupBox24.Controls.Add(this.label104);
             this.groupBox24.Controls.Add(this.numericUpDown228);
             this.groupBox24.Controls.Add(this.numericUpDown227);
@@ -4284,6 +4427,7 @@
             this.groupBox24.Controls.Add(this.numericUpDown148);
             this.groupBox24.Controls.Add(this.numericUpDown149);
             this.groupBox24.Controls.Add(this.comboBox136);
+            resources.ApplyResources(this.groupBox24, "groupBox24");
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.TabStop = false;
             // 
@@ -4369,30 +4513,34 @@
             // 
             // comboBox140
             // 
-            resources.ApplyResources(this.comboBox140, "comboBox140");
-            this.comboBox140.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox140.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox140.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox140.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox140, "comboBox140");
             this.comboBox140.Name = "comboBox140";
             // 
             // comboBox139
             // 
-            resources.ApplyResources(this.comboBox139, "comboBox139");
-            this.comboBox139.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox139.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox139.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox139.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox139, "comboBox139");
             this.comboBox139.Name = "comboBox139";
             // 
             // comboBox138
             // 
-            resources.ApplyResources(this.comboBox138, "comboBox138");
-            this.comboBox138.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox138.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox138.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox138.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox138, "comboBox138");
             this.comboBox138.Name = "comboBox138";
             // 
             // comboBox137
             // 
-            resources.ApplyResources(this.comboBox137, "comboBox137");
-            this.comboBox137.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox137.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox137.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox137.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox137, "comboBox137");
             this.comboBox137.Name = "comboBox137";
             // 
             // numericUpDown148
@@ -4407,14 +4555,14 @@
             // 
             // comboBox136
             // 
-            resources.ApplyResources(this.comboBox136, "comboBox136");
-            this.comboBox136.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox136.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox136.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox136.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox136, "comboBox136");
             this.comboBox136.Name = "comboBox136";
             // 
             // groupBox25
             // 
-            resources.ApplyResources(this.groupBox25, "groupBox25");
             this.groupBox25.Controls.Add(this.label105);
             this.groupBox25.Controls.Add(this.numericUpDown233);
             this.groupBox25.Controls.Add(this.numericUpDown232);
@@ -4437,6 +4585,7 @@
             this.groupBox25.Controls.Add(this.comboBox144);
             this.groupBox25.Controls.Add(this.numericUpDown167);
             this.groupBox25.Controls.Add(this.comboBox145);
+            resources.ApplyResources(this.groupBox25, "groupBox25");
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.TabStop = false;
             // 
@@ -4527,30 +4676,34 @@
             // 
             // comboBox141
             // 
-            resources.ApplyResources(this.comboBox141, "comboBox141");
-            this.comboBox141.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox141.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox141.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox141.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox141, "comboBox141");
             this.comboBox141.Name = "comboBox141";
             // 
             // comboBox142
             // 
-            resources.ApplyResources(this.comboBox142, "comboBox142");
-            this.comboBox142.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox142.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox142.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox142.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox142, "comboBox142");
             this.comboBox142.Name = "comboBox142";
             // 
             // comboBox143
             // 
-            resources.ApplyResources(this.comboBox143, "comboBox143");
-            this.comboBox143.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox143.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox143.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox143.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox143, "comboBox143");
             this.comboBox143.Name = "comboBox143";
             // 
             // comboBox144
             // 
-            resources.ApplyResources(this.comboBox144, "comboBox144");
-            this.comboBox144.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox144.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox144.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox144.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox144, "comboBox144");
             this.comboBox144.Name = "comboBox144";
             // 
             // numericUpDown167
@@ -4560,9 +4713,10 @@
             // 
             // comboBox145
             // 
-            resources.ApplyResources(this.comboBox145, "comboBox145");
-            this.comboBox145.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox145.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox145.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox145.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox145, "comboBox145");
             this.comboBox145.Name = "comboBox145";
             // 
             // button1
