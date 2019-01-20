@@ -99,11 +99,13 @@ namespace WindowsFormsApplication1
         public static int offset3 = 0;
         public List<string> nameText = new List<string>();
         public int currentLine = 0;
+        public string searchTerm = "";
 
         public List<int> useScriptList = new List<int>();
         public List<MemoryStream> scriptList = new List<MemoryStream>();
         public List<List<MemoryStream>> functionList = new List<List<MemoryStream>>();
         public List<List<MemoryStream>> movementList = new List<List<MemoryStream>>();
+        public List<Tuple<string, string, string>> scriptsToSearch = new List<Tuple<string, string, string>>();
         #endregion
 
         public Form1()
@@ -192,6 +194,7 @@ namespace WindowsFormsApplication1
                 read.Close();
                 button3.Enabled = true;
                 saveROMToolStripMenuItem.Enabled = true;
+                btnSearchScript.Enabled = true;
                 button19.Enabled = true;
                 button14.Enabled = true;
                 button21.Enabled = true;
@@ -5023,6 +5026,7 @@ namespace WindowsFormsApplication1
 
                 MessageBox.Show(rm.GetString("unsupported"), null, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 saveROMToolStripMenuItem.Enabled = false;
+                btnSearchScript.Enabled = false;
                 button19.Enabled = false;
                 button14.Enabled = false;
                 button21.Enabled = false;
@@ -5049,6 +5053,7 @@ namespace WindowsFormsApplication1
                     tabControl1.TabPages.Add(tabPage11);
                     tabControl1.TabPages.Add(tabPage23);
                     saveROMToolStripMenuItem.Enabled = true;
+                    btnSearchScript.Enabled = true;
                     button19.Enabled = true;
                     button14.Enabled = true;
                     button21.Enabled = true;
@@ -12888,6 +12893,22 @@ namespace WindowsFormsApplication1
                 readScriptGenV();
                 return;
             }
+
+            #region Paths
+            if (gameID == 0x45414441 || gameID == 0x45415041 || gameID == 0x53414441 || gameID == 0x53415041 || gameID == 0x46414441 || gameID == 0x46415041 || gameID == 0x49414441 || gameID == 0x49415041 || gameID == 0x44414441 || gameID == 0x44415041 || gameID == 0x4B414441 || gameID == 0x4B415041)
+            {
+                scriptPath = workingFolder + @"data\fielddata\script\scr_seq_release" + "\\" + comboBox5.SelectedIndex.ToString("D4");
+            }
+            if (gameID == 0x45555043 || gameID == 0x53555043 || gameID == 0x46555043 || gameID == 0x49555043 || gameID == 0x44555043 || gameID == 0x4A555043 || gameID == 0x4B555043)
+            {
+                scriptPath = workingFolder + @"data\fielddata\script\scr_seq" + "\\" + comboBox5.SelectedIndex.ToString("D4");
+            }
+            if (gameID == 0x454B5049 || gameID == 0x45475049 || gameID == 0x534B5049 || gameID == 0x53475049 || gameID == 0x464B5049 || gameID == 0x46475049 || gameID == 0x494B5049 || gameID == 0x49475049 || gameID == 0x444B5049 || gameID == 0x44475049 || gameID == 0x4A4B5049 || gameID == 0x4A475049 || gameID == 0x4B4B5049 || gameID == 0x4B475049 || gameID == 0x4A414441 || gameID == 0x4A415041)
+            {
+                scriptPath = workingFolder + @"data\a\0\1\script\" + "\\" + comboBox5.SelectedIndex.ToString("D4");
+            }
+            #endregion
+
             #region RM
             if (gameID == 0x45414441 || gameID == 0x45415041 || gameID == 0x53414441 || gameID == 0x53415041 || gameID == 0x46414441 || gameID == 0x46415041 || gameID == 0x49414441 || gameID == 0x49415041 || gameID == 0x44414441 || gameID == 0x44415041 || gameID == 0x4A414441 || gameID == 0x4A415041 || gameID == 0x4B414441 || gameID == 0x4B415041 || gameID == 0x45555043 || gameID == 0x53555043 || gameID == 0x46555043 || gameID == 0x49555043 || gameID == 0x44555043 || gameID == 0x4A555043 || gameID == 0x4B555043)
             {
@@ -12915,20 +12936,7 @@ namespace WindowsFormsApplication1
             useScriptList.Clear();
             comboBox9.Items.Clear();
             comboBox9.Enabled = false;
-            #region Paths
-            if (gameID == 0x45414441 || gameID == 0x45415041 || gameID == 0x53414441 || gameID == 0x53415041 || gameID == 0x46414441 || gameID == 0x46415041 || gameID == 0x49414441 || gameID == 0x49415041 || gameID == 0x44414441 || gameID == 0x44415041 || gameID == 0x4B414441 || gameID == 0x4B415041)
-            {
-                scriptPath = workingFolder + @"data\fielddata\script\scr_seq_release" + "\\" + comboBox5.SelectedIndex.ToString("D4");
-            }
-            if (gameID == 0x45555043 || gameID == 0x53555043 || gameID == 0x46555043 || gameID == 0x49555043 || gameID == 0x44555043 || gameID == 0x4A555043 || gameID == 0x4B555043)
-            {
-                scriptPath = workingFolder + @"data\fielddata\script\scr_seq" + "\\" + comboBox5.SelectedIndex.ToString("D4");
-            }
-            if (gameID == 0x454B5049 || gameID == 0x45475049 || gameID == 0x534B5049 || gameID == 0x53475049 || gameID == 0x464B5049 || gameID == 0x46475049 || gameID == 0x494B5049 || gameID == 0x49475049 || gameID == 0x444B5049 || gameID == 0x44475049 || gameID == 0x4A4B5049 || gameID == 0x4A475049 || gameID == 0x4B4B5049 || gameID == 0x4B475049 || gameID == 0x4A414441 || gameID == 0x4A415041)
-            {
-                scriptPath = workingFolder + @"data\a\0\1\script\" + "\\" + comboBox5.SelectedIndex.ToString("D4");
-            }
-            #endregion
+           
             System.IO.BinaryReader readScript = new System.IO.BinaryReader(File.OpenRead(scriptPath));
             int flag = (int)readScript.ReadUInt32();
             if (flag == 0)
@@ -13500,7 +13508,7 @@ namespace WindowsFormsApplication1
             progressBar2.Value = progressBar2.Maximum;
             button33.Enabled = true;
             readScript.Close();
-            comboBox9.SelectedIndex = 0;
+            //comboBox9.SelectedIndex = 0;
         }
 
         private string getOperator(byte op)
@@ -13759,6 +13767,53 @@ namespace WindowsFormsApplication1
             }
             readFunction.Close();
             return;
+        }
+
+        private void searchScripts ()
+        {
+            searchTerm = Microsoft.VisualBasic.Interaction.InputBox("Input a string to search for.", "Input Search Term");
+            List<string> output = new List<string>();
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                for (int count = 0; count < comboBox5.Items.Count; count++)
+                {
+                    comboBox5.SelectedIndex = count;
+
+                    for (int count2 = 0; count2 < comboBox9.Items.Count; count2++)
+                    {
+                        comboBox9.SelectedIndex = count2;
+
+                        foreach (Tuple<string, string, string> tuple in scriptsToSearch)
+                        {
+                            if (tuple.Item1.Contains(searchTerm))
+                            {
+                                output.Add($"Found term in Script File {count}, Script #{count2+1}.");
+                            }
+
+                            if (tuple.Item2.Contains(searchTerm))
+                            {
+                                output.Add($"Found term in Script File {count}, Function #{count2+1}.");
+                            }
+
+                            if (tuple.Item3.Contains(searchTerm))
+                            {
+                                output.Add($"Found term in Script File {count}, Movement #{count2+1}.");
+                            }
+                            
+                        }
+                        scriptsToSearch.Clear();
+                    }
+                }
+                textBox7.Text = string.Join(Environment.NewLine, output);
+                tabControl1.SelectedTab = tabPage11;
+                tabControl4.SelectedTab = tabPage25;
+            }
+            else  
+            {
+                MessageBox.Show("Can't search for nothing.");
+            }
+            
+            searchTerm = "";
         }
 
         private void comboBox9_SelectedIndexChanged(object sender, EventArgs e) // Select Script
@@ -14539,6 +14594,11 @@ namespace WindowsFormsApplication1
             textBox2.Text = scripts;
             textBox3.Text = functions;
             textBox4.Text = movements;
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                scriptsToSearch.Add(new Tuple<string, string, string>(scripts, functions, movements));
+            }
         }
 
         private void button33_Click(object sender, EventArgs e) // Save Script File
@@ -16966,5 +17026,9 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        private void btnSearchScript_Click(object sender, EventArgs e)
+        {
+            searchScripts();
+        }
     }
 }
