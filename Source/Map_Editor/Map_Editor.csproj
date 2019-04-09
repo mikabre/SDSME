@@ -171,6 +171,7 @@
     <Compile Include="Form9 Wild Editor.Designer.cs">
       <DependentUpon>Form9 Wild Editor.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameInfo.cs" />
     <Compile Include="LibNDSFormats\bytearrayoutputstream.cs" />
     <Compile Include="LibNDSFormats\convertir.cs" />
     <Compile Include="LibNDSFormats\EndianBinaryReader.cs" />

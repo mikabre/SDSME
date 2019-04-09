@@ -85,6 +85,7 @@ namespace WindowsFormsApplication1
         public List<int> scriptOffset = new List<int>();
         public List<int> useIndex = new List<int>();
         public List<bool> fixMovOffset = new List<bool>();
+        Dictionary<int, GameInfo> dictOfGameInfo;
         public static bool soundON = false;
         public static bool isBW = false;
         public static bool isB2W2 = false;
@@ -178,6 +179,7 @@ namespace WindowsFormsApplication1
             openNDS.Filter = rm.GetString("ndsROM");
             if (openNDS.ShowDialog() == DialogResult.OK)
             {
+                ndsFileName = openNDS.FileName;
                 tabControl1.TabPages.Remove(tabPage22);
                 tabControl1.TabPages.Remove(tabPage2);
                 tabControl1.TabPages.Remove(tabPage6);
@@ -201,4627 +203,114 @@ namespace WindowsFormsApplication1
                 radioButton14.Visible = false;
                 radioButton15.Visible = false;
                 numericUpDown7.Visible = false;
-
-                #region DP Support
                 Column11.MaxInputLength = 3;
                 Column12.MaxInputLength = 32767;
                 Column11.ReadOnly = false;
                 Column12.ReadOnly = true;
-                if (gameID == 0x45414441 || gameID == 0x45415041)
+                dictOfGameInfo = new Dictionary<int, GameInfo>()
                 {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x45414441) label1.Text = rm.GetString("diamond") + rm.GetString("usa");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("usa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEEDBC;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-                    
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
+                    { 0x45414441, new GameInfo("usa", "diamond", 0xEEDBC, 0x45414441) },
+                    { 0x45415041, new GameInfo("usa", "pearl", 0xEEDBC, 0x45415041) },
+                    { 0x45555043, new GameInfo("usa", "platinum", 0xE601C, 0x45555043) },
+                    { 0x454B5049, new GameInfo("usa", "heartgold", 0xF6BE0, 0x454B5049) },
+                    { 0x45475049, new GameInfo("usa", "soulsilver", 0xF6BE0, 0x45475049) },
+                    { 0x4F425249, new GameInfo("usa", "black", 0, 0x4F425249) },
+                    { 0x4F415249, new GameInfo("usa", "white", 0, 0x4F415249) },
+                    { 0x4F455249, new GameInfo("usa", "black2", 0, 0x4F455249) },
+                    { 0x4F445249, new GameInfo("usa", "white2", 0, 0x4F445249) },
 
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
+                    { 0x53414441, new GameInfo("spa", "diamond", 0xEEE08, 0x53414441) },
+                    { 0x53415041, new GameInfo("spa", "pearl", 0xEEE08, 0x53415041) },
+                    { 0x53555043, new GameInfo("spa", "platinum", 0xE60B0, 0x53555043) },
+                    { 0x534B5049, new GameInfo("spa", "heartgold", 0xF6BC8, 0x534B5049) },
+                    { 0x53475049, new GameInfo("spa", "soulsilver", 0xF6BC8, 0x53475049) },
+                    { 0x53425249, new GameInfo("spa", "black", 0, 0x53425249) },
+                    { 0x53415249, new GameInfo("spa", "white", 0, 0x53415249) },
+                    { 0x53455249, new GameInfo("spa", "black2", 0, 0x53455249) },
+                    { 0x53445249, new GameInfo("spa", "white2", 0, 0x53445249) },
+
+                    { 0x46414441, new GameInfo("fra", "diamond", 0xEEDFC, 0x46414441) },
+                    { 0x46415041, new GameInfo("fra", "pearl", 0xEEDFC, 0x46415041) },
+                    { 0x46555043, new GameInfo("fra", "platinum", 0xE60A4, 0x46555043) },
+                    { 0x464B5049, new GameInfo("fra", "heartgold", 0xF6BC4, 0x464B5049) },
+                    { 0x46475049, new GameInfo("fra", "soulsilver", 0xF6BC4, 0x46475049) },
+                    { 0x46425249, new GameInfo("fra", "black", 0, 0x46425249) },
+                    { 0x46415249, new GameInfo("fra", "white", 0, 0x46415249) },
+                    { 0x46455249, new GameInfo("fra", "black2", 0, 0x46455249) },
+                    { 0x46445249, new GameInfo("fra", "white2", 0, 0x46445249) },
+
+                    { 0x49414441, new GameInfo("ita", "diamond", 0xEED70, 0x49414441) },
+                    { 0x49415041, new GameInfo("ita", "pearl", 0xEED70, 0x49415041) },
+                    { 0x49555043, new GameInfo("ita", "platinum", 0xE6038, 0x49555043) },
+                    { 0x494B5049, new GameInfo("ita", "heartgold", 0xF6B58, 0x494B5049) },
+                    { 0x49475049, new GameInfo("ita", "soulsilver", 0xF6B58, 0x49475049) },
+                    { 0x49425249, new GameInfo("ita", "black", 0, 0x49425249) },
+                    { 0x49415249, new GameInfo("ita", "white", 0, 0x49415249) },
+                    { 0x49455249, new GameInfo("ita", "black2", 0, 0x49455249) },
+                    { 0x49445249, new GameInfo("ita", "white2", 0, 0x49445249) },
+
+                    { 0x44414441, new GameInfo("ger", "diamond", 0xEEDCC, 0x44414441) },
+                    { 0x44415041, new GameInfo("ger", "pearl", 0xEEDCC, 0x44415041) },
+                    { 0x44555043, new GameInfo("ger", "platinum", 0xE6074, 0x44555043) },
+                    { 0x444B5049, new GameInfo("ger", "heartgold", 0xF6B94, 0x444B5049) },
+                    { 0x44475049, new GameInfo("ger", "soulsilver", 0xF6B94, 0x44475049) },
+                    { 0x44425249, new GameInfo("ger", "black", 0, 0x44425249) },
+                    { 0x44415249, new GameInfo("ger", "white", 0, 0x44415249) },
+                    { 0x44455249, new GameInfo("ger", "black2", 0, 0x44455249) },
+                    { 0x44445249, new GameInfo("ger", "white2", 0, 0x44445249) },
+
+                    { 0x4A414441, new GameInfo("jap", "diamond", 0xF0C28, 0x4A414441) },
+                    { 0x4A415041, new GameInfo("jap", "pearl", 0xF0C28, 0x4A415041) },
+                    { 0x4A555043, new GameInfo("jap", "platinum", 0xE56F0, 0x4A555043) },
+                    { 0x4A4B5049, new GameInfo("jap", "heartgold", 0xF6390, 0x4A4B5049) },
+                    { 0x4A475049, new GameInfo("jap", "soulsilver", 0xF6390, 0x4A475049) },
+                    { 0x4A425249, new GameInfo("jap", "black", 0, 0x4A425249) },
+                    { 0x4A415249, new GameInfo("jap", "white", 0, 0x4A415249) },
+                    { 0x4A455249, new GameInfo("jap", "black2", 0, 0x4A455249) },
+                    { 0x4A445249, new GameInfo("jap", "white2", 0, 0x4A445249) },
+
+                    { 0x4B414441, new GameInfo("kor", "diamond", 0xEA408, 0x4B414441) },
+                    { 0x4B415041, new GameInfo("kor", "pearl", 0xEA408, 0x4B415041) },
+                    { 0x4B555043, new GameInfo("kor", "platinum", 0xE6AA4, 0x4B555043) },
+                    { 0x4B4B5049, new GameInfo("kor", "heartgold", 0xF728C, 0x4B4B5049) },
+                    { 0x4B475049, new GameInfo("kor", "soulsilver", 0xF728C, 0x4B475049) },
+                    { 0x4B425249, new GameInfo("kor", "black", 0, 0x4B425249) },
+                    { 0x4B415249, new GameInfo("kor", "white", 0, 0x4B415249) },
+                    { 0x4B455249, new GameInfo("kor", "black2", 0, 0x4B455249) },
+                    { 0x4B445249, new GameInfo("kor", "white2", 0, 0x4B445249) }
+                };
+
+                #region DP Support
+                if (dictOfGameInfo[gameID].Title.Equals("diamond") || dictOfGameInfo[gameID].Title.Equals("pearl"))
+                {
+                    loadDP();
                     return;
                 }
-                if (gameID == 0x53414441 || gameID == 0x53415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x53414441) label1.Text = rm.GetString("diamond") + rm.GetString("spa");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("spa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEEE08;
-                    BinaryReader readMapTable = new BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
 
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x46414441 || gameID == 0x46415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x46414441) label1.Text = rm.GetString("diamond") + rm.GetString("fra");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("fra");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEEDFC;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x49414441 || gameID == 0x49415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x49414441) label1.Text = rm.GetString("diamond") + rm.GetString("ita");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("ita");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEED70;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x44414441 || gameID == 0x44415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x44414441) label1.Text = rm.GetString("diamond") + rm.GetString("ger");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("ger");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEEDCC;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x4A414441 || gameID == 0x4A415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x4A414441) label1.Text = rm.GetString("diamond") + rm.GetString("jap");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("jap");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF0C28;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0374"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x4B414441 || gameID == 0x4B415041)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = false;
-                    dataGridView1.Columns[18].Visible = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    if (gameID == 0x4B414441) label1.Text = rm.GetString("diamond") + rm.GetString("kor");
-                    else label1.Text = rm.GetString("pearl") + rm.GetString("kor");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xEA408;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0376"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    comboBox13.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
                 #endregion
 
                 #region Platinum Support
 
-                if (gameID == 0x45555043)
+                if (dictOfGameInfo[gameID].Title.Equals("platinum"))
                 {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("usa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE601C;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
+                    loadP();
                     return;
                 }
-                if (gameID == 0x53555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("spa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE60B0;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
 
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x46555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("fra");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE60A4;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x49555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("ita");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE6038;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x44555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("ger");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE6074;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x4A555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("jap");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE56F0;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0427"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
-                if (gameID == 0x4B555043)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    dataGridView1.Columns[17].Visible = true;
-                    dataGridView1.Columns[18].Visible = false;
-                    dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
-                    dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
-                    dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
-                    dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView1.Rows.Clear();
-                    label1.Text = rm.GetString("platinum") + rm.GetString("kor");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
-                    Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
-                    Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
-                    Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
-                    Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
-                    Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
-                    Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
-                    eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xE6AA4;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0428"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView1.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
-                    mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox3.SelectedIndex = 0;
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    comboBox10.Items.Clear();
-                    comboBox12.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    comboBox5.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
-                    {
-                        comboBox10.Items.Add(rm.GetString("eventList") + i);
-                    }
-                    comboBox10.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
-                    {
-                        comboBox12.Items.Add(rm.GetString("areaDataList") + i);
-                    }
-                    comboBox12.SelectedIndex = 0;
-                    for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
-                    {
-                        comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
-                    }
-                    readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
-                    comboBox13.SelectedIndex = 0;
-                    return;
-                }
                 #endregion
 
                 #region HGSS Support
 
                 tabControl1.TabPages.Remove(tabPage1);
-                if (gameID == 0x454B5049 || gameID == 0x45475049)
+
+                if (dictOfGameInfo[gameID].Title.Equals("heartgold") || dictOfGameInfo[gameID].Title.Equals("soulsilver"))
                 {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x454B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("usa");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("usa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6BE0;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
+                    loadHGSS();
                     return;
                 }
-                if (gameID == 0x534B5049 || gameID == 0x53475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x534B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("spa");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("spa");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6BC8;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
 
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
-                if (gameID == 0x464B5049 || gameID == 0x46475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x464B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("fra");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("fra");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6BC4;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
-                if (gameID == 0x494B5049 || gameID == 0x49475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x494B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("ita");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("ita");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6B58;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
-                if (gameID == 0x444B5049 || gameID == 0x44475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x444B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("ger");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("ger");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6B94;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
-                if (gameID == 0x4A4B5049 || gameID == 0x4A475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x4A4B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("jap");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("jap");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF6390;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0272"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
-                if (gameID == 0x4B4B5049 || gameID == 0x4B475049)
-                {
-                    Program.ApplicationExit(null, null);
-                    isBW = false;
-                    isB2W2 = false;
-                    sPKPackagesToolStripMenuItem.Enabled = true;
-                    dataGridView13.Rows.Clear();
-                    if (gameID == 0x4B4B5049) label1.Text = rm.GetString("heartgold") + rm.GetString("kor");
-                    else label1.Text = rm.GetString("soulsilver") + rm.GetString("kor");
-                    ndsFileName = openNDS.FileName;
-                    workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
-                    loadLastRom();
-                    iconON = true; pictureBox1.Refresh();
-                    toolStripStatusLabel1.Text = rm.GetString("extractPackage");
-                    Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
-                    Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
-                    Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
-                    Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
-                    Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
-                    Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
-                    Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
-                    Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
-                    eventPath = Form1.workingFolder + @"data\a\0\3\event";
-                    scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
-                    matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
-                    mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
-                    buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
-                    texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
-                    bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
-                    textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
-                    if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
-                    {
-                        System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                        long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
-                        arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                        arm9Truncate.Close();
-                    }
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Data\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
-                    toolStripStatusLabel1.Text = rm.GetString("ready");
-                    headerCount = 0;
-                    headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
-                    MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
-                    dataGridView1.Enabled = true;
-                    readArm9.BaseStream.Position = 0xF728C;
-                    System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
-                    int rowNumber = 0;
-                    nameText.Clear();
-                    #region Names
-                    System.IO.BinaryReader readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0274"));
-                    int stringCount = (int)readText.ReadUInt16();
-                    int initialKey = (int)readText.ReadUInt16();
-                    int key1 = (initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    bool specialCharON = false;
-                    int[] currentOffset = new int[stringCount];
-                    int[] currentSize = new int[stringCount];
-                    string[] currentPokemon = new string[stringCount];
-                    int car = 0;
-                    for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key1 * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                        currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                    }
-                    for (int i = 0; i < stringCount; i++) // Adds new string
-                    {
-                        key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        readText.BaseStream.Position = currentOffset[i];
-                        string pokemonText = "";
-                        for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                        {
-                            car = ((int)readText.ReadUInt16()) ^ key1;
-                            #region Special Characters
-                            if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
-                            {
-                                if (car == 0xE000)
-                                {
-                                    pokemonText += @"\n";
-                                }
-                                if (car == 0x25BC)
-                                {
-                                    pokemonText += @"\r";
-                                }
-                                if (car == 0x25BD)
-                                {
-                                    pokemonText += @"\f";
-                                }
-                                if (car == 0xFFFE)
-                                {
-                                    pokemonText += @"\v";
-                                    specialCharON = true;
-                                }
-                                if (car == 0xFFFF)
-                                {
-                                    pokemonText += "";
-                                }
-                            }
-                            #endregion
-                            else
-                            {
-                                if (specialCharON == true)
-                                {
-                                    pokemonText += car.ToString("X4");
-                                    specialCharON = false;
-                                }
-                                else
-                                {
-                                    string character = getChar.GetString(car.ToString("X4"));
-                                    pokemonText += character;
-                                    if (character == null)
-                                    {
-                                        pokemonText += @"\x" + car.ToString("X4");
-                                    }
-                                }
-                            }
-                            key1 += 0x493D;
-                            key1 &= 0xFFFF;
-                        }
-                        nameText.Add(pokemonText);
-                    }
-                    readText.Close();
-                    #endregion
-                    string mapNames;
-                    for (int i = 0; i < headerCount; i++)
-                    {
-                        mapNames = "";
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readMapTable.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
-                        dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
-                        dataGridView13.Rows[rowNumber].ReadOnly = false;
-                        rowNumber++;
-                    }
-                    matrixPath = workingFolder + @"data\a\0\4\matrix\";
-                    mapFileName = workingFolder + @"data\a\0\6\map\";
-                    button1.Enabled = true;
-                    readArm9.Close();
-                    readMapTable.Close();
-                    newHeaderCount = headerCount;
-                    comboBox1.Items.Clear();
-                    for (int i = 0; i < matrixCount; i++)
-                    {
-                        comboBox1.Items.Add(rm.GetString("matrix") + i);
-                    }
-                    comboBox1.SelectedIndex = 0;
-                    comboBox2.Items.Clear();
-
-                    comboBox4.Items.Clear();
-                    listBox1.Items.Clear();
-                    comboBox4.Items.Add(rm.GetString("untextured"));
-                    for (int i = 0; i < texturesCount; i++)
-                    {
-                        comboBox4.Items.Add(rm.GetString("tileset") + i);
-                        listBox1.Items.Add(rm.GetString("tileset") + i);
-                    }
-                    listBox1.SelectedIndex = 0;
-                    #region Read Map Names
-                    for (int i = 0; i < mapCount; i++)
-                    {
-                        string nsbmdName = "";
-                        System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
-                        permissionSize = (int)readNames.ReadUInt32();
-                        buildingsSize = (int)readNames.ReadUInt32();
-                        readNames.BaseStream.Position += 0xa;
-                        unknownSize = (int)readNames.ReadUInt16();
-                        readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
-                        for (int nameLength = 0; nameLength < 16; nameLength++)
-                        {
-                            int currentByte = readNames.ReadByte();
-                            byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
-                            if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
-                        }
-                        comboBox2.Items.Add(i + ": " + nsbmdName);
-                        readNames.Close();
-                    }
-                    #endregion
-
-                    comboBox2.SelectedIndex = 0;
-                    tabControl1.TabPages.Add(tabPage22);
-                    tabControl1.TabPages.Add(tabPage2);
-                    tabControl1.TabPages.Add(tabPage6);
-                    tabControl1.TabPages.Add(tabPage7);
-                    tabControl1.TabPages.Add(tabPage11);
-                    tabControl1.TabPages.Add(tabPage23);
-                    comboBox1_SelectedIndexChanged(null, null);
-                    comboBox2_SelectedIndexChanged(null, null);
-                    comboBox3.Items.Clear();
-                    for (int i = 0; i < textCount; i++)
-                    {
-                        comboBox3.Items.Add(rm.GetString("text") + i);
-                    }
-                    comboBox5.Items.Clear();
-                    comboBox9.Items.Clear();
-                    for (int i = 0; i < scriptCount; i++)
-                    {
-                        comboBox5.Items.Add(rm.GetString("script") + i);
-                    }
-                    return;
-                }
                 #endregion
-                
+
                 #region BW Support
                 if (gameID == 0x4F425249) // Black USA
                 {
@@ -5072,7 +561,7 @@ namespace WindowsFormsApplication1
                     dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
                     dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
                     dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
-                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags"); 
+                    dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
                 }
                 return;
             }
@@ -5340,6 +829,715 @@ namespace WindowsFormsApplication1
                     toolStripStatusLabel1.Text = rm.GetString("ready");
                 }
             }
+        }
+
+        private void loadDP() // Initialize DP
+        {
+            Program.ApplicationExit(null, null);
+            isBW = false;
+            isB2W2 = false;
+            dataGridView1.Columns[17].Visible = false;
+            dataGridView1.Columns[18].Visible = false;
+            sPKPackagesToolStripMenuItem.Enabled = true;
+            dataGridView1.Rows.Clear();
+            label1.Text = rm.GetString(dictOfGameInfo[gameID].Title) + rm.GetString(dictOfGameInfo[gameID].Region);
+            workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
+            loadLastRom();
+            iconON = true; pictureBox1.Refresh();
+            toolStripStatusLabel1.Text = rm.GetString("extractPackage");
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+            {
+                Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
+                Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
+                Narc.Open(workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(workingFolder + @"data\fielddata\eventdata\zone_event");
+            }
+            else
+            {
+                Narc.Open(workingFolder + @"data\fielddata\land_data\land_data_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data_release");
+                Narc.Open(workingFolder + @"data\fielddata\script\scr_seq_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq_release");
+                Narc.Open(workingFolder + @"data\fielddata\eventdata\zone_event_release.narc").ExtractToFolder(workingFolder + @"data\fielddata\eventdata\zone_event_release");
+            }
+            Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
+            Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
+            Narc.Open(workingFolder + @"data\msgdata\msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\msg");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+            {
+                eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
+                scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
+                mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
+            }
+            else
+            {
+                eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event_release";
+                scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq_release").Length;
+                mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data_release").Length;
+            }
+            matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
+            buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
+            texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
+            bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
+            textCount = Directory.GetFiles(workingFolder + @"data\msgdata\msg").Length;
+            toolStripStatusLabel1.Text = rm.GetString("ready");
+            headerCount = 0;
+            headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
+            MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            toolStripStatusLabel1.Text = rm.GetString("loadingHeaders");
+            System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
+            dataGridView1.Enabled = true;
+            readArm9.BaseStream.Position = dictOfGameInfo[gameID].ReadOffset;
+            System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
+            int rowNumber = 0;
+            nameText.Clear();
+            #region Names
+            BinaryReader readText;
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0374"));
+            else if (dictOfGameInfo[gameID].Region.Equals("kor"))
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0376"));
+            else
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\msg\0382"));
+            int stringCount = (int)readText.ReadUInt16();
+            int initialKey = (int)readText.ReadUInt16();
+            int key1 = (initialKey * 0x2FD) & 0xFFFF;
+            int key2 = 0;
+            int realKey = 0;
+            bool specialCharON = false;
+            int[] currentOffset = new int[stringCount];
+            int[] currentSize = new int[stringCount];
+            string[] currentPokemon = new string[stringCount];
+            int car = 0;
+            for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
+            {
+                key2 = (key1 * (i + 1) & 0xFFFF);
+                realKey = key2 | (key2 << 16);
+                currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
+                currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
+            }
+            for (int i = 0; i < stringCount; i++) // Adds new string
+            {
+                key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
+                readText.BaseStream.Position = currentOffset[i];
+                string pokemonText = "";
+                for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
+                {
+                    car = ((int)readText.ReadUInt16()) ^ key1;
+                    #region Special Characters
+                    if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
+                    {
+                        if (car == 0xE000)
+                        {
+                            pokemonText += @"\n";
+                        }
+                        if (car == 0x25BC)
+                        {
+                            pokemonText += @"\r";
+                        }
+                        if (car == 0x25BD)
+                        {
+                            pokemonText += @"\f";
+                        }
+                        if (car == 0xFFFE)
+                        {
+                            pokemonText += @"\v";
+                            specialCharON = true;
+                        }
+                        if (car == 0xFFFF)
+                        {
+                            pokemonText += "";
+                        }
+                    }
+                    #endregion
+                    else
+                    {
+                        if (specialCharON == true)
+                        {
+                            pokemonText += car.ToString("X4");
+                            specialCharON = false;
+                        }
+                        else
+                        {
+                            string character = getChar.GetString(car.ToString("X4"));
+                            pokemonText += character;
+                            if (character == null)
+                            {
+                                pokemonText += @"\x" + car.ToString("X4");
+                            }
+                        }
+                    }
+                    key1 += 0x493D;
+                    key1 &= 0xFFFF;
+                }
+                nameText.Add(pokemonText);
+            }
+            readText.Close();
+            #endregion
+            string mapNames;
+            for (int i = 0; i < headerCount; i++)
+            {
+                mapNames = "";
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readMapTable.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
+                }
+                dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadUInt16()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
+                dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
+                dataGridView1.Rows[rowNumber].ReadOnly = false;
+                rowNumber++;
+            }
+            matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+                mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
+            else
+                mapFileName = workingFolder + @"data\fielddata\land_data\land_data_release\";
+            button1.Enabled = true;
+            readArm9.Close();
+            readMapTable.Close();
+            newHeaderCount = headerCount;
+            comboBox1.Items.Clear();
+            for (int i = 0; i < matrixCount; i++)
+            {
+                comboBox1.Items.Add(rm.GetString("matrix") + i);
+            }
+            comboBox1.SelectedIndex = 0;
+            comboBox2.Items.Clear();
+
+            comboBox4.Items.Clear();
+            listBox1.Items.Clear();
+            comboBox4.Items.Add(rm.GetString("untextured"));
+            for (int i = 0; i < texturesCount; i++)
+            {
+                comboBox4.Items.Add(rm.GetString("tileset") + i);
+                listBox1.Items.Add(rm.GetString("tileset") + i);
+            }
+            listBox1.SelectedIndex = 0;
+            #region Read Map Names
+            for (int i = 0; i < mapCount; i++)
+            {
+                string nsbmdName = "";
+                BinaryReader readNames;
+                if (dictOfGameInfo[gameID].Region.Equals("jap"))
+                    readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
+                else
+                    readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data_release" + "\\" + i.ToString("D4")));
+                permissionSize = (int)readNames.ReadUInt32();
+                buildingsSize = (int)readNames.ReadUInt32();
+                readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readNames.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
+                }
+                comboBox2.Items.Add(i + ": " + nsbmdName);
+                readNames.Close();
+            }
+            #endregion
+
+            comboBox2.SelectedIndex = 0;
+            if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
+            tabControl1.TabPages.Add(tabPage2);
+            tabControl1.TabPages.Add(tabPage6);
+            tabControl1.TabPages.Add(tabPage7);
+            tabControl1.TabPages.Add(tabPage11);
+            tabControl1.TabPages.Add(tabPage23);
+            comboBox1_SelectedIndexChanged(null, null);
+            comboBox2_SelectedIndexChanged(null, null);
+            comboBox3.Items.Clear();
+            for (int i = 0; i < textCount; i++)
+            {
+                comboBox3.Items.Add(rm.GetString("text") + i);
+            }
+            comboBox3.SelectedIndex = 0;
+            comboBox5.Items.Clear();
+            comboBox9.Items.Clear();
+            comboBox10.Items.Clear();
+            comboBox12.Items.Clear();
+            comboBox13.Items.Clear();
+            for (int i = 0; i < scriptCount; i++)
+            {
+                comboBox5.Items.Add(rm.GetString("script") + i);
+            }
+            comboBox5.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
+            {
+                comboBox10.Items.Add(rm.GetString("eventList") + i);
+            }
+            comboBox10.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
+            {
+                comboBox12.Items.Add(rm.GetString("areaDataList") + i);
+            }
+            comboBox12.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
+            {
+                comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
+            }
+            readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
+            comboBox13.SelectedIndex = 0;
+        }
+
+        private void loadP() // Initialize Platinum
+        {
+            Program.ApplicationExit(null, null);
+            isBW = false;
+            isB2W2 = false;
+            dataGridView1.Columns[17].Visible = true;
+            dataGridView1.Columns[18].Visible = false;
+            dataGridView1.Columns[13].HeaderText = rm.GetString("nameFrame");
+            dataGridView1.Columns[14].HeaderText = rm.GetString("weather");
+            dataGridView1.Columns[15].HeaderText = rm.GetString("camera");
+            dataGridView1.Columns[16].HeaderText = rm.GetString("nameStyle");
+            dataGridView1.Columns[17].HeaderText = rm.GetString("flags");
+            sPKPackagesToolStripMenuItem.Enabled = true;
+            dataGridView1.Rows.Clear();
+            label1.Text = rm.GetString(dictOfGameInfo[gameID].Title) + rm.GetString(dictOfGameInfo[gameID].Region);
+            workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
+            loadLastRom();
+            iconON = true; pictureBox1.Refresh();
+            toolStripStatusLabel1.Text = rm.GetString("extractPackage");
+            Narc.Open(workingFolder + @"data\fielddata\mapmatrix\map_matrix.narc").ExtractToFolder(workingFolder + @"data\fielddata\mapmatrix\map_matrix");
+            Narc.Open(workingFolder + @"data\fielddata\land_data\land_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\land_data\land_data");
+            Narc.Open(workingFolder + @"data\fielddata\build_model\build_model.narc").ExtractToFolder(workingFolder + @"data\fielddata\build_model\build_model");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset");
+            Narc.Open(workingFolder + @"data\msgdata\pl_msg.narc").ExtractToFolder(workingFolder + @"data\msgdata\pl_msg");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_data.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_data");
+            Narc.Open(workingFolder + @"data\fielddata\areadata\area_build_model\area_build.narc").ExtractToFolder(workingFolder + @"data\fielddata\areadata\area_build_model\area_build");
+            Narc.Open(workingFolder + @"data\fielddata\script\scr_seq.narc").ExtractToFolder(workingFolder + @"data\fielddata\script\scr_seq");
+            Narc.Open(Form1.workingFolder + @"data\fielddata\eventdata\zone_event.narc").ExtractToFolder(Form1.workingFolder + @"data\fielddata\eventdata\zone_event");
+            eventPath = Form1.workingFolder + @"data\fielddata\eventdata\zone_event";
+            scriptCount = Directory.GetFiles(workingFolder + @"data\fielddata\script\scr_seq").Length;
+            matrixCount = Directory.GetFiles(workingFolder + @"data\fielddata\mapmatrix\map_matrix").Length;
+            mapCount = Directory.GetFiles(workingFolder + @"data\fielddata\land_data\land_data").Length;
+            buildingsCount = Directory.GetFiles(workingFolder + @"data\fielddata\build_model\build_model").Length;
+            texturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_map_tex\map_tex_set").Length;
+            bldTexturesCount = Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\areabm_texset").Length;
+            textCount = Directory.GetFiles(workingFolder + @"data\msgdata\pl_msg").Length;
+            toolStripStatusLabel1.Text = rm.GetString("ready");
+            headerCount = 0;
+            headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
+            MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
+            dataGridView1.Enabled = true;
+            readArm9.BaseStream.Position = dictOfGameInfo[gameID].ReadOffset;
+            System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
+            int rowNumber = 0;
+            nameText.Clear();
+            #region Names
+            BinaryReader readText;
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0427"));
+            }
+            else if (dictOfGameInfo[gameID].Region.Equals("kor"))
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0428"));
+            }
+            else
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\msgdata\pl_msg\0433"));
+            }
+            int stringCount = (int)readText.ReadUInt16();
+            int initialKey = (int)readText.ReadUInt16();
+            int key1 = (initialKey * 0x2FD) & 0xFFFF;
+            int key2 = 0;
+            int realKey = 0;
+            bool specialCharON = false;
+            int[] currentOffset = new int[stringCount];
+            int[] currentSize = new int[stringCount];
+            string[] currentPokemon = new string[stringCount];
+            int car = 0;
+            for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
+            {
+                key2 = (key1 * (i + 1) & 0xFFFF);
+                realKey = key2 | (key2 << 16);
+                currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
+                currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
+            }
+            for (int i = 0; i < stringCount; i++) // Adds new string
+            {
+                key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
+                readText.BaseStream.Position = currentOffset[i];
+                string pokemonText = "";
+                for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
+                {
+                    car = ((int)readText.ReadUInt16()) ^ key1;
+                    #region Special Characters
+                    if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
+                    {
+                        if (car == 0xE000)
+                        {
+                            pokemonText += @"\n";
+                        }
+                        if (car == 0x25BC)
+                        {
+                            pokemonText += @"\r";
+                        }
+                        if (car == 0x25BD)
+                        {
+                            pokemonText += @"\f";
+                        }
+                        if (car == 0xFFFE)
+                        {
+                            pokemonText += @"\v";
+                            specialCharON = true;
+                        }
+                        if (car == 0xFFFF)
+                        {
+                            pokemonText += "";
+                        }
+                    }
+                    #endregion
+                    else
+                    {
+                        if (specialCharON == true)
+                        {
+                            pokemonText += car.ToString("X4");
+                            specialCharON = false;
+                        }
+                        else
+                        {
+                            string character = getChar.GetString(car.ToString("X4"));
+                            pokemonText += character;
+                            if (character == null)
+                            {
+                                pokemonText += @"\x" + car.ToString("X4");
+                            }
+                        }
+                    }
+                    key1 += 0x493D;
+                    key1 &= 0xFFFF;
+                }
+                nameText.Add(pokemonText);
+            }
+            readText.Close();
+            #endregion
+            string mapNames;
+            for (int i = 0; i < headerCount; i++)
+            {
+                mapNames = "";
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readMapTable.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
+                }
+                dataGridView1.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
+                dataGridView1.Rows[rowNumber].HeaderCell.Value = i.ToString();
+                dataGridView1.Rows[rowNumber].ReadOnly = false;
+                rowNumber++;
+            }
+            matrixPath = workingFolder + @"data\fielddata\mapmatrix\map_matrix\";
+            mapFileName = workingFolder + @"data\fielddata\land_data\land_data\";
+            button1.Enabled = true;
+            readArm9.Close();
+            readMapTable.Close();
+            newHeaderCount = headerCount;
+            comboBox1.Items.Clear();
+            for (int i = 0; i < matrixCount; i++)
+            {
+                comboBox1.Items.Add(rm.GetString("matrix") + i);
+            }
+            comboBox1.SelectedIndex = 0;
+            comboBox2.Items.Clear();
+
+            comboBox4.Items.Clear();
+            listBox1.Items.Clear();
+            comboBox4.Items.Add(rm.GetString("untextured"));
+            for (int i = 0; i < texturesCount; i++)
+            {
+                comboBox4.Items.Add(rm.GetString("tileset") + i);
+                listBox1.Items.Add(rm.GetString("tileset") + i);
+            }
+            listBox1.SelectedIndex = 0;
+            #region Read Map Names
+            for (int i = 0; i < mapCount; i++)
+            {
+                string nsbmdName = "";
+                System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\land_data\land_data" + "\\" + i.ToString("D4")));
+                permissionSize = (int)readNames.ReadUInt32();
+                buildingsSize = (int)readNames.ReadUInt32();
+                readNames.BaseStream.Position = 0x10 + permissionSize + buildingsSize + 0x34;
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readNames.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
+                }
+                comboBox2.Items.Add(i + ": " + nsbmdName);
+                readNames.Close();
+            }
+            #endregion
+
+            comboBox2.SelectedIndex = 0;
+            if (tabControl1.TabPages.Count == 0) tabControl1.TabPages.Add(tabPage1);
+            tabControl1.TabPages.Add(tabPage2);
+            tabControl1.TabPages.Add(tabPage6);
+            tabControl1.TabPages.Add(tabPage7);
+            tabControl1.TabPages.Add(tabPage11);
+            tabControl1.TabPages.Add(tabPage23);
+            comboBox1_SelectedIndexChanged(null, null);
+            comboBox2_SelectedIndexChanged(null, null);
+            comboBox3.Items.Clear();
+            for (int i = 0; i < textCount; i++)
+            {
+                comboBox3.Items.Add(rm.GetString("text") + i);
+            }
+            comboBox3.SelectedIndex = 0;
+            comboBox5.Items.Clear();
+            comboBox9.Items.Clear();
+            comboBox10.Items.Clear();
+            comboBox12.Items.Clear();
+            for (int i = 0; i < scriptCount; i++)
+            {
+                comboBox5.Items.Add(rm.GetString("script") + i);
+            }
+            comboBox5.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(eventPath).Length; i++)
+            {
+                comboBox10.Items.Add(rm.GetString("eventList") + i);
+            }
+            comboBox10.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_data").Length; i++)
+            {
+                comboBox12.Items.Add(rm.GetString("areaDataList") + i);
+            }
+            comboBox12.SelectedIndex = 0;
+            for (int i = 0; i < Directory.GetFiles(workingFolder + @"data\fielddata\areadata\area_build_model\area_build").Length; i++)
+            {
+                comboBox13.Items.Add(rm.GetString("buildingPackList") + i);
+            }
+            readBldNames(workingFolder + @"data\fielddata\build_model\build_model.narc");
+            comboBox13.SelectedIndex = 0;
+        }
+
+        private void loadHGSS() // Initialize HGSS
+        {
+            Program.ApplicationExit(null, null);
+            isBW = false;
+            isB2W2 = false;
+            sPKPackagesToolStripMenuItem.Enabled = true;
+            dataGridView13.Rows.Clear();
+            label1.Text = rm.GetString(dictOfGameInfo[gameID].Title) + rm.GetString(dictOfGameInfo[gameID].Region);
+            workingFolder = Path.GetDirectoryName(ndsFileName) + "\\" + Path.GetFileNameWithoutExtension(ndsFileName) + "_SDSME" + "\\";
+            loadLastRom();
+            iconON = true; pictureBox1.Refresh();
+            toolStripStatusLabel1.Text = rm.GetString("extractPackage");
+            Narc.Open(workingFolder + @"data\a\0\4\1").ExtractToFolder(workingFolder + @"data\a\0\4\matrix");
+            Narc.Open(workingFolder + @"data\a\0\6\5").ExtractToFolder(workingFolder + @"data\a\0\6\map");
+            Narc.Open(workingFolder + @"data\a\0\4\0").ExtractToFolder(workingFolder + @"data\a\0\4\building");
+            Narc.Open(workingFolder + @"data\a\0\4\4").ExtractToFolder(workingFolder + @"data\a\0\4\texture");
+            Narc.Open(workingFolder + @"data\a\0\7\0").ExtractToFolder(workingFolder + @"data\a\0\7\textureBld");
+            Narc.Open(workingFolder + @"data\a\0\2\7").ExtractToFolder(workingFolder + @"data\a\0\2\text");
+            Narc.Open(workingFolder + @"data\a\0\1\2").ExtractToFolder(workingFolder + @"data\a\0\1\script");
+            Narc.Open(workingFolder + @"data\a\0\3\2").ExtractToFolder(workingFolder + @"data\a\0\3\event");
+            eventPath = Form1.workingFolder + @"data\a\0\3\event";
+            scriptCount = Directory.GetFiles(workingFolder + @"data\a\0\1\script").Length;
+            matrixCount = Directory.GetFiles(workingFolder + @"data\a\0\4\matrix").Length;
+            mapCount = Directory.GetFiles(workingFolder + @"data\a\0\6\map").Length;
+            buildingsCount = Directory.GetFiles(workingFolder + @"data\a\0\4\building").Length;
+            texturesCount = Directory.GetFiles(workingFolder + @"data\a\0\4\texture").Length;
+            bldTexturesCount = Directory.GetFiles(workingFolder + @"data\a\0\7\textureBld").Length;
+            textCount = Directory.GetFiles(workingFolder + @"data\a\0\2\text").Length;
+            if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
+            {
+                System.IO.BinaryWriter arm9Truncate = new System.IO.BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
+                long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
+                arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
+                arm9Truncate.Close();
+            }
+            Process decompress = new Process();
+            decompress.StartInfo.FileName = @"Data\blz.exe";
+            decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
+            decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            decompress.StartInfo.CreateNoWindow = true;
+            decompress.Start();
+            decompress.WaitForExit();
+            toolStripStatusLabel1.Text = rm.GetString("ready");
+            headerCount = 0;
+            headerCount = new System.IO.FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 16;
+            MessageBox.Show(rm.GetString("headersFound") + headerCount, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.IO.BinaryReader readArm9 = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
+            dataGridView1.Enabled = true;
+            readArm9.BaseStream.Position = dictOfGameInfo[gameID].ReadOffset;
+            System.IO.BinaryReader readMapTable = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin"));
+            int rowNumber = 0;
+            nameText.Clear();
+            #region Names
+            BinaryReader readText;
+            if (dictOfGameInfo[gameID].Region.Equals("jap"))
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0272"));
+            }
+            else if (dictOfGameInfo[gameID].Region.Equals("kor"))
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0274"));
+            }
+            else
+            {
+                readText = new System.IO.BinaryReader(File.OpenRead(Form1.workingFolder + @"data\a\0\2\text\0279"));
+            }
+            int stringCount = (int)readText.ReadUInt16();
+            int initialKey = (int)readText.ReadUInt16();
+            int key1 = (initialKey * 0x2FD) & 0xFFFF;
+            int key2 = 0;
+            int realKey = 0;
+            bool specialCharON = false;
+            int[] currentOffset = new int[stringCount];
+            int[] currentSize = new int[stringCount];
+            string[] currentPokemon = new string[stringCount];
+            int car = 0;
+            for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
+            {
+                key2 = (key1 * (i + 1) & 0xFFFF);
+                realKey = key2 | (key2 << 16);
+                currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
+                currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
+            }
+            for (int i = 0; i < stringCount; i++) // Adds new string
+            {
+                key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
+                readText.BaseStream.Position = currentOffset[i];
+                string pokemonText = "";
+                for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
+                {
+                    car = ((int)readText.ReadUInt16()) ^ key1;
+                    #region Special Characters
+                    if (car == 0xE000 || car == 0x25BC || car == 0x25BD || car == 0xFFFE || car == 0xFFFF)
+                    {
+                        if (car == 0xE000)
+                        {
+                            pokemonText += @"\n";
+                        }
+                        if (car == 0x25BC)
+                        {
+                            pokemonText += @"\r";
+                        }
+                        if (car == 0x25BD)
+                        {
+                            pokemonText += @"\f";
+                        }
+                        if (car == 0xFFFE)
+                        {
+                            pokemonText += @"\v";
+                            specialCharON = true;
+                        }
+                        if (car == 0xFFFF)
+                        {
+                            pokemonText += "";
+                        }
+                    }
+                    #endregion
+                    else
+                    {
+                        if (specialCharON == true)
+                        {
+                            pokemonText += car.ToString("X4");
+                            specialCharON = false;
+                        }
+                        else
+                        {
+                            string character = getChar.GetString(car.ToString("X4"));
+                            pokemonText += character;
+                            if (character == null)
+                            {
+                                pokemonText += @"\x" + car.ToString("X4");
+                            }
+                        }
+                    }
+                    key1 += 0x493D;
+                    key1 &= 0xFFFF;
+                }
+                nameText.Add(pokemonText);
+            }
+            readText.Close();
+            #endregion
+            string mapNames;
+            for (int i = 0; i < headerCount; i++)
+            {
+                mapNames = "";
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readMapTable.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) mapNames = mapNames + Encoding.UTF8.GetString(mapBytes);
+                }
+                dataGridView13.Rows.Add(rowNumber, mapNames, readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), readArm9.ReadByte() + (readArm9.ReadByte() << 8), nameText[readArm9.ReadByte()], readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte(), readArm9.ReadByte()); // Adds header data to grid
+                dataGridView13.Rows[rowNumber].HeaderCell.Value = i.ToString();
+                dataGridView13.Rows[rowNumber].ReadOnly = false;
+                rowNumber++;
+            }
+            matrixPath = workingFolder + @"data\a\0\4\matrix\";
+            mapFileName = workingFolder + @"data\a\0\6\map\";
+            button1.Enabled = true;
+            readArm9.Close();
+            readMapTable.Close();
+            newHeaderCount = headerCount;
+            comboBox1.Items.Clear();
+            for (int i = 0; i < matrixCount; i++)
+            {
+                comboBox1.Items.Add(rm.GetString("matrix") + i);
+            }
+            comboBox1.SelectedIndex = 0;
+            comboBox2.Items.Clear();
+
+            comboBox4.Items.Clear();
+            listBox1.Items.Clear();
+            comboBox4.Items.Add(rm.GetString("untextured"));
+            for (int i = 0; i < texturesCount; i++)
+            {
+                comboBox4.Items.Add(rm.GetString("tileset") + i);
+                listBox1.Items.Add(rm.GetString("tileset") + i);
+            }
+            listBox1.SelectedIndex = 0;
+            #region Read Map Names
+            for (int i = 0; i < mapCount; i++)
+            {
+                string nsbmdName = "";
+                System.IO.BinaryReader readNames = new System.IO.BinaryReader(File.OpenRead(workingFolder + @"data\a\0\6\map" + "\\" + i.ToString("D4")));
+                permissionSize = (int)readNames.ReadUInt32();
+                buildingsSize = (int)readNames.ReadUInt32();
+                readNames.BaseStream.Position += 0xa;
+                unknownSize = (int)readNames.ReadUInt16();
+                readNames.BaseStream.Position = 0x14 + unknownSize + permissionSize + buildingsSize + 0x34;
+                for (int nameLength = 0; nameLength < 16; nameLength++)
+                {
+                    int currentByte = readNames.ReadByte();
+                    byte[] mapBytes = new Byte[] { Convert.ToByte(currentByte) }; // Reads map name
+                    if (currentByte != 0) nsbmdName = nsbmdName + Encoding.UTF8.GetString(mapBytes);
+                }
+                comboBox2.Items.Add(i + ": " + nsbmdName);
+                readNames.Close();
+            }
+            #endregion
+
+            comboBox2.SelectedIndex = 0;
+            tabControl1.TabPages.Add(tabPage22);
+            tabControl1.TabPages.Add(tabPage2);
+            tabControl1.TabPages.Add(tabPage6);
+            tabControl1.TabPages.Add(tabPage7);
+            tabControl1.TabPages.Add(tabPage11);
+            tabControl1.TabPages.Add(tabPage23);
+            comboBox1_SelectedIndexChanged(null, null);
+            comboBox2_SelectedIndexChanged(null, null);
+            comboBox3.Items.Clear();
+            for (int i = 0; i < textCount; i++)
+            {
+                comboBox3.Items.Add(rm.GetString("text") + i);
+            }
+            comboBox5.Items.Clear();
+            comboBox9.Items.Clear();
+            for (int i = 0; i < scriptCount; i++)
+            {
+                comboBox5.Items.Add(rm.GetString("script") + i);
+            }
+            return;
         }
 
         private void loadBW() // Initialize BW
@@ -12899,11 +9097,11 @@ namespace WindowsFormsApplication1
             {
                 scriptPath = workingFolder + @"data\fielddata\script\scr_seq_release" + "\\" + comboBox5.SelectedIndex.ToString("D4");
             }
-            if (gameID == 0x45555043 || gameID == 0x53555043 || gameID == 0x46555043 || gameID == 0x49555043 || gameID == 0x44555043 || gameID == 0x4A555043 || gameID == 0x4B555043)
+            if (gameID == 0x45555043 || gameID == 0x53555043 || gameID == 0x46555043 || gameID == 0x49555043 || gameID == 0x44555043 || gameID == 0x4A555043 || gameID == 0x4B555043 || gameID == 0x4A414441 || gameID == 0x4A415041)
             {
                 scriptPath = workingFolder + @"data\fielddata\script\scr_seq" + "\\" + comboBox5.SelectedIndex.ToString("D4");
             }
-            if (gameID == 0x454B5049 || gameID == 0x45475049 || gameID == 0x534B5049 || gameID == 0x53475049 || gameID == 0x464B5049 || gameID == 0x46475049 || gameID == 0x494B5049 || gameID == 0x49475049 || gameID == 0x444B5049 || gameID == 0x44475049 || gameID == 0x4A4B5049 || gameID == 0x4A475049 || gameID == 0x4B4B5049 || gameID == 0x4B475049 || gameID == 0x4A414441 || gameID == 0x4A415041)
+            if (gameID == 0x454B5049 || gameID == 0x45475049 || gameID == 0x534B5049 || gameID == 0x53475049 || gameID == 0x464B5049 || gameID == 0x46475049 || gameID == 0x494B5049 || gameID == 0x49475049 || gameID == 0x444B5049 || gameID == 0x44475049 || gameID == 0x4A4B5049 || gameID == 0x4A475049 || gameID == 0x4B4B5049 || gameID == 0x4B475049)
             {
                 scriptPath = workingFolder + @"data\a\0\1\script\" + "\\" + comboBox5.SelectedIndex.ToString("D4");
             }
