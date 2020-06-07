@@ -1,29 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.Globalization;
-using System.Resources;
-using System.Reflection;
-using System.Threading;
+﻿using LibNDSFormats.NSBMD;
 using NarcAPI;
-using AB_API;
-using Map_Converter;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 using Tao.OpenGl;
-using LibNDSFormats.NSBMD;
-using LibNDSFormats.NSBTX;
 
 namespace WindowsFormsApplication1
 {
-
     public partial class Form1 : Form
     {
         #region RM
@@ -13227,6 +13219,14 @@ namespace WindowsFormsApplication1
         private void btnSearchScript_Click(object sender, EventArgs e)
         {
             searchScripts();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (System.ComponentModel.LicenseManager.UsageMode != System.ComponentModel.LicenseUsageMode.Designtime)
+            {
+                //
+            }
         }
     }
 }
